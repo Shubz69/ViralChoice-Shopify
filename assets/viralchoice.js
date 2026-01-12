@@ -358,13 +358,6 @@
   function initCursorTrail() {
     // Removed for professional design
     return;
-        point.element.style.left = point.x + 'px';
-        point.element.style.top = point.y + 'px';
-      });
-      requestAnimationFrame(animateTrail);
-    }
-    
-    animateTrail();
   }
 
   // ============================================
