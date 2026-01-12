@@ -109,10 +109,22 @@
   // ============================================
   
   function initScrollReveal() {
-    if (prefersReducedMotion) return;
-    
     const revealElements = document.querySelectorAll('.vc-reveal');
     if (revealElements.length === 0) return;
+    
+    // Make all elements visible immediately if reduced motion or if JS hasn't loaded
+    if (prefersReducedMotion) {
+      revealElements.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    
+    // Show elements that are already in viewport immediately
+    revealElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('is-visible');
+      }
+    });
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
@@ -120,7 +132,7 @@
           // Stagger animation
           setTimeout(() => {
             entry.target.classList.add('is-visible');
-          }, index * 100);
+          }, index * 50);
           observer.unobserve(entry.target);
         }
       });
@@ -129,7 +141,11 @@
       rootMargin: '0px 0px -50px 0px'
     });
     
-    revealElements.forEach(el => observer.observe(el));
+    revealElements.forEach(el => {
+      if (!el.classList.contains('is-visible')) {
+        observer.observe(el);
+      }
+    });
   }
 
   // ============================================
