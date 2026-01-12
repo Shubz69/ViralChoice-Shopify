@@ -31,7 +31,6 @@ jobs:
           shopify theme push \
             --store "$SHOPIFY_FLAG_STORE" \
             --theme "$SHOPIFY_FLAG_THEME_ID" \
-            --token "$SHOPIFY_CLI_THEME_TOKEN" \
             --json \
             --allow-live \
             --ignore config/settings_data.json
