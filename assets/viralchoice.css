@@ -920,18 +920,25 @@ a:focus-visible {
   border: 2px solid rgba(74, 144, 226, 0.3);
   border-radius: var(--vc-radius);
   font-size: 1rem;
-  transition: var(--vc-transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: var(--vc-bg-light);
   color: #ffffff;
   font-family: inherit;
+}
+
+.vc-form-select:hover,
+.vc-form-input:hover {
+  border-color: rgba(74, 144, 226, 0.5);
+  background: var(--vc-bg-lighter);
 }
 
 .vc-form-select:focus,
 .vc-form-input:focus {
   outline: none;
   border-color: var(--vc-blue);
-  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
   background: var(--vc-bg-lighter);
+  transform: translateY(-2px);
 }
 
 .vc-add-to-cart-wrapper {
