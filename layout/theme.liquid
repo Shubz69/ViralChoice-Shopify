@@ -34,18 +34,19 @@
   </head>
 
   <body class="vc-body">
-    <div class="vc-page-background">
-      <div class="vc-page-particles"></div>
-      <div class="vc-page-grid"></div>
-    </div>
+    <div class="vc-page-background"></div>
     
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
+    {% section 'header' %}
+
     <main id="MainContent" class="vc-main-content" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
+
+    {% section 'footer' %}
 
 
     <ul hidden>
