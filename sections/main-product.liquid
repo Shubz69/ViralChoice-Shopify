@@ -46,7 +46,7 @@
       <div class="vc-product-price">
         {{ product.price | money }}
         {% if product.compare_at_price > product.price %}
-          <span style="text-decoration: line-through; opacity: 0.5; font-size: 1.25rem; margin-left: 0.5rem;">
+          <span class="compare-at-price">
             {{ product.compare_at_price | money }}
           </span>
         {% endif %}
