@@ -1,0 +1,28 @@
+{% comment %}
+  ViralChoice Page Section
+  Enhanced page template with visual effects
+{% endcomment %}
+
+<div class="vc-page-section vc-reveal">
+  <div class="vc-section-background"></div>
+  <div class="vc-page-content">
+    {% if page.title != blank %}
+      <h1 class="vc-page-title">{{ page.title }}</h1>
+    {% endif %}
+    
+    {% if page.content != blank %}
+      <div class="vc-page-body">
+        {{ page.content }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Page",
+  "tag": "section",
+  "class": "section",
+  "settings": []
+}
+{% endschema %}

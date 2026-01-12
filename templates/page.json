@@ -4,12 +4,8 @@
       "type": "header",
       "settings": {}
     },
-    "main-product": {
-      "type": "main-product",
-      "settings": {}
-    },
-    "vc-trust-strip": {
-      "type": "vc-trust-strip",
+    "main": {
+      "type": "page",
       "settings": {}
     },
     "footer": {
@@ -19,8 +15,7 @@
   },
   "order": [
     "vc-header",
-    "main-product",
-    "vc-trust-strip",
+    "main",
     "footer"
   ]
 }

@@ -3,7 +3,8 @@
   Enhanced product page with trust badges, FAQ, and sticky mobile CTA
 {% endcomment %}
 
-<div class="vc-product-section">
+<div class="vc-product-section vc-reveal">
+  <div class="vc-section-background"></div>
   <div class="vc-product-grid">
     {% comment %} Product Images {% endcomment %}
     <div class="vc-product-images">
@@ -47,7 +48,10 @@
     
     {% comment %} Product Info {% endcomment %}
     <div class="vc-product-info">
-      <h1 class="vc-product-title">{{ product.title }}</h1>
+      <div class="vc-product-title-wrapper">
+        <h1 class="vc-product-title">{{ product.title }}</h1>
+        <div class="vc-product-badge">🔥 VIRAL</div>
+      </div>
       
       <div class="vc-product-price">
         {{ product.price | money }}

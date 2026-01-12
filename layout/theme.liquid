@@ -33,14 +33,17 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="gradient">
+  <body class="vc-body">
+    <div class="vc-page-background">
+      <div class="vc-page-particles"></div>
+      <div class="vc-page-grid"></div>
+    </div>
+    
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
-
-
-    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+    <main id="MainContent" class="vc-main-content" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 

@@ -1,0 +1,62 @@
+{% comment %}
+  ViralChoice Collection Section
+  Enhanced collection page with visual effects
+{% endcomment %}
+
+<div class="vc-collection-section vc-reveal">
+  <div class="vc-section-background"></div>
+  <div class="vc-collection-content">
+    {% if collection.title != blank %}
+      <h1 class="vc-collection-title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="vc-collection-description">{{ collection.description }}</div>
+      {% endif %}
+    {% endif %}
+    
+    {% if collection.products.size > 0 %}
+      <div class="vc-collection-grid">
+        {% for product in collection.products %}
+          <div class="vc-collection-item vc-reveal">
+            <a href="{{ product.url }}" class="vc-collection-item__link">
+              {% if product.featured_image %}
+                <div class="vc-collection-item__image">
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                            {{ product.featured_image | image_url: width: 600 }} 600w,
+                            {{ product.featured_image | image_url: width: 900 }} 900w"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 300px"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="{{ 600 | divided_by: product.featured_image.aspect_ratio | ceil }}"
+                  >
+                </div>
+              {% endif %}
+              
+              <h3 class="vc-collection-item__title">{{ product.title }}</h3>
+              
+              <div class="vc-collection-item__price">
+                {{ product.price | money }}
+                {% if product.compare_at_price > product.price %}
+                  <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="vc-collection-empty">No products found in this collection.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Collection",
+  "tag": "section",
+  "class": "section",
+  "settings": []
+}
+{% endschema %}
