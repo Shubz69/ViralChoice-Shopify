@@ -1,11 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Horizon",
+    "theme_name": "ViralChoice",
     "theme_version": "1.0.0",
-    "theme_author": "ViralChoice",
-    "theme_documentation_url": "",
-    "theme_support_url": ""
+    "theme_author": "ViralChoice"
   },
   {
     "name": "Colors",
