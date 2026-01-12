@@ -18,16 +18,21 @@
       {% endif %}
       
       <a href="{{ featured_product.url }}" class="vc-featured-product-card">
-        {% if featured_product.featured_image %}
-          <img 
-            src="{{ featured_product.featured_image | image_url: width: 500 }}"
-            alt="{{ featured_product.featured_image.alt | escape }}"
-            class="vc-featured-product-card__image"
-            loading="lazy"
-            width="500"
-            height="{{ 500 | divided_by: featured_product.featured_image.aspect_ratio | ceil }}"
-          >
-        {% endif %}
+          {% if featured_product.featured_image %}
+            <img 
+              src="{{ featured_product.featured_image | image_url: width: 800 }}"
+              srcset="{{ featured_product.featured_image | image_url: width: 400 }} 400w,
+                      {{ featured_product.featured_image | image_url: width: 600 }} 600w,
+                      {{ featured_product.featured_image | image_url: width: 800 }} 800w,
+                      {{ featured_product.featured_image | image_url: width: 1200 }} 1200w"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 500px"
+              alt="{{ featured_product.featured_image.alt | escape }}"
+              class="vc-featured-product-card__image"
+              loading="lazy"
+              width="800"
+              height="{{ 800 | divided_by: featured_product.featured_image.aspect_ratio | ceil }}"
+            >
+          {% endif %}
         
         <h3 class="vc-featured-product-card__title">{{ featured_product.title }}</h3>
         
