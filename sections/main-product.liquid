@@ -191,18 +191,48 @@
     'use strict';
     
     function initProductPage() {
-      // Variant selector
       const productForm = document.querySelector('#product-form');
-      const productSelect = document.querySelector('#product-select-{{ section.id }}');
+      if (!productForm) return;
       
-      if (productSelect && productForm) {
-        productSelect.addEventListener('change', function() {
-          const selectedVariantId = this.value;
-          const hiddenInput = productForm.querySelector('input[name="id"]');
+      // Handle form submission to ensure proper variant ID
+      productForm.addEventListener('submit', function(e) {
+        const productSelect = document.querySelector('#product-select-{{ section.id }}');
+        const hiddenInput = productForm.querySelector('input[name="id"]');
+        const quantityInput = productForm.querySelector('input[name="quantity"]');
+        
+        // Ensure variant ID is set
+        if (productSelect) {
+          const selectedVariantId = productSelect.value;
           if (hiddenInput) {
             hiddenInput.value = selectedVariantId;
-            hiddenInput.removeAttribute('disabled');
           }
+        }
+        
+        // Ensure quantity is valid
+        if (quantityInput) {
+          const quantity = parseInt(quantityInput.value) || 1;
+          if (quantity < 1) {
+            quantityInput.value = 1;
+          }
+        }
+        
+        // Verify we have a variant ID before submitting
+        const variantId = productSelect ? productSelect.value : (hiddenInput ? hiddenInput.value : null);
+        if (!variantId) {
+          e.preventDefault();
+          alert('Please select a product option');
+          return false;
+        }
+      });
+      
+      // Variant selector change handler
+      const productSelect = document.querySelector('#product-select-{{ section.id }}');
+      if (productSelect) {
+        productSelect.addEventListener('change', function() {
+          const selectedVariantId = this.value;
+          // Update price display if needed
+          const selectedOption = this.options[this.selectedIndex];
+          // Form will use the select value directly
         });
       }
       
