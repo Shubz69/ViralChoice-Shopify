@@ -1,14 +1,22 @@
 {% comment %}
-  ViralChoice Hero Section
-  Displays headline, subheadline, and CTA button
+  ViralChoice Hero Section - UNIQUE DESIGN
+  Displays headline, subheadline, and CTA button with unique effects
 {% endcomment %}
 
 <section class="vc-hero vc-reveal">
+  <div class="vc-hero__particles"></div>
+  <div class="vc-hero__grid-overlay"></div>
   <div class="vc-hero__inner">
     {% if section.settings.headline != blank %}
-      <h1 class="vc-hero__headline">{{ section.settings.headline }}</h1>
+      <h1 class="vc-hero__headline">
+        <span class="vc-hero__headline-text">{{ section.settings.headline }}</span>
+        <span class="vc-hero__headline-glitch" aria-hidden="true">{{ section.settings.headline }}</span>
+      </h1>
     {% else %}
-      <h1 class="vc-hero__headline">Discover Viral Products That Actually Work</h1>
+      <h1 class="vc-hero__headline">
+        <span class="vc-hero__headline-text">Discover Viral Products That Actually Work</span>
+        <span class="vc-hero__headline-glitch" aria-hidden="true">Discover Viral Products That Actually Work</span>
+      </h1>
     {% endif %}
     
     {% if section.settings.subheadline != blank %}
@@ -19,18 +27,21 @@
     
     {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
       <div class="vc-hero__cta">
-        <a href="{{ section.settings.cta_link }}" class="vc-button vc-button--primary vc-button--large">
-          {{ section.settings.cta_text }}
+        <a href="{{ section.settings.cta_link }}" class="vc-button vc-button--primary vc-button--large vc-button--neon">
+          <span class="vc-button__text">{{ section.settings.cta_text }}</span>
+          <span class="vc-button__glow"></span>
         </a>
       </div>
     {% else %}
       <div class="vc-hero__cta">
-        <a href="/products" class="vc-button vc-button--primary vc-button--large">
-          Shop Now
+        <a href="/products" class="vc-button vc-button--primary vc-button--large vc-button--neon">
+          <span class="vc-button__text">Shop Now</span>
+          <span class="vc-button__glow"></span>
         </a>
       </div>
     {% endif %}
   </div>
+  <div class="vc-hero__scanline"></div>
 </section>
 
 {% schema %}

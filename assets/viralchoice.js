@@ -327,6 +327,116 @@
   }
 
   // ============================================
+  // PARTICLE SYSTEM - UNIQUE EFFECT
+  // ============================================
+  
+  function initParticles() {
+    if (prefersReducedMotion) return;
+    
+    const particlesContainer = document.querySelector('.vc-hero__particles');
+    if (!particlesContainer) return;
+    
+    // Create dynamic particles
+    const particleCount = 30;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'vc-particle';
+      particle.style.cssText = `
+        position: absolute;
+        width: ${Math.random() * 4 + 2}px;
+        height: ${Math.random() * 4 + 2}px;
+        background: ${Math.random() > 0.5 ? 'var(--vc-red)' : 'var(--vc-orange)'};
+        border-radius: 50%;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        opacity: ${Math.random() * 0.5 + 0.3};
+        box-shadow: 0 0 ${Math.random() * 10 + 5}px currentColor;
+        animation: particleFloat ${Math.random() * 10 + 10}s ease-in-out infinite;
+        animation-delay: ${Math.random() * 5}s;
+      `;
+      particlesContainer.appendChild(particle);
+    }
+    
+    // Add particle animation
+    if (!document.getElementById('vc-particle-style')) {
+      const style = document.createElement('style');
+      style.id = 'vc-particle-style';
+      style.textContent = `
+        @keyframes particleFloat {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.3;
+          }
+          25% {
+            transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(1.2);
+            opacity: 0.6;
+          }
+          50% {
+            transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(0.8);
+            opacity: 0.4;
+          }
+          75% {
+            transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(1.1);
+            opacity: 0.5;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  // ============================================
+  // CURSOR TRAIL EFFECT - UNIQUE
+  // ============================================
+  
+  function initCursorTrail() {
+    if (prefersReducedMotion) return;
+    if (window.innerWidth <= 768) return; // Mobile: no cursor trail
+    
+    const trail = [];
+    const trailLength = 10;
+    
+    for (let i = 0; i < trailLength; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'vc-cursor-trail';
+      dot.style.cssText = `
+        position: fixed;
+        width: ${(trailLength - i) * 2}px;
+        height: ${(trailLength - i) * 2}px;
+        background: radial-gradient(circle, var(--vc-red), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: ${(trailLength - i) / trailLength * 0.5};
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s linear;
+      `;
+      document.body.appendChild(dot);
+      trail.push({ element: dot, x: 0, y: 0 });
+    }
+    
+    let mouseX = 0, mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    }, { passive: true });
+    
+    function animateTrail() {
+      trail.forEach((point, index) => {
+        const nextPoint = trail[index - 1] || { x: mouseX, y: mouseY };
+        point.x += (nextPoint.x - point.x) * 0.3;
+        point.y += (nextPoint.y - point.y) * 0.3;
+        point.element.style.left = point.x + 'px';
+        point.element.style.top = point.y + 'px';
+      });
+      requestAnimationFrame(animateTrail);
+    }
+    
+    animateTrail();
+  }
+
+  // ============================================
   // ADD RIPPLE ANIMATION CSS
   // ============================================
   
@@ -365,6 +475,8 @@
     initTrustBadges();
     initParallax();
     initHeaderScroll();
+    initParticles();
+    initCursorTrail();
   }
   
   // Start initialization

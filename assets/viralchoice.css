@@ -4,7 +4,7 @@
    ============================================ */
 
 :root {
-  /* Brand Colors - RED & BLACK ONLY */
+  /* Brand Colors - RED & BLACK with UNIQUE ACCENTS */
   --vc-black: #0B0B0B;
   --vc-black-light: #1a1a1a;
   --vc-black-lighter: #2a2a2a;
@@ -13,6 +13,17 @@
   --vc-red-light: #FF1A0D;
   --vc-red-glow: rgba(225, 6, 0, 0.3);
   --vc-red-glow-strong: rgba(225, 6, 0, 0.5);
+  
+  /* UNIQUE ACCENT COLORS - Orange/Amber for contrast */
+  --vc-orange: #FF6B35;
+  --vc-orange-glow: rgba(255, 107, 53, 0.4);
+  --vc-amber: #FFB800;
+  --vc-amber-glow: rgba(255, 184, 0, 0.3);
+  
+  /* NEON EFFECTS */
+  --vc-neon-red: #FF0040;
+  --vc-neon-orange: #FF6B35;
+  --vc-neon-glow: 0 0 20px var(--vc-red), 0 0 40px var(--vc-red), 0 0 60px var(--vc-red);
   
   /* Design Tokens */
   --vc-radius: 12px;
@@ -165,8 +176,14 @@ a:focus-visible {
 }
 
 .vc-button--primary {
-  background: var(--vc-red);
+  background: linear-gradient(135deg, var(--vc-red) 0%, var(--vc-red-dark) 50%, var(--vc-red) 100%);
+  background-size: 200% auto;
   box-shadow: var(--vc-shadow-red);
+  animation: gradientShift 3s ease infinite;
+}
+
+.vc-button--primary:hover {
+  background-position: 100% center;
 }
 
 .vc-button--secondary {
@@ -229,17 +246,27 @@ a:focus-visible {
   letter-spacing: -0.03em;
   text-decoration: none;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #ffffff 0%, var(--vc-red) 100%);
+  background: linear-gradient(135deg, #ffffff 0%, var(--vc-red) 50%, var(--vc-orange) 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: var(--vc-transition-fast);
+  filter: drop-shadow(0 0 10px var(--vc-red-glow));
+  animation: logoShimmer 3s ease-in-out infinite;
+}
+
+@keyframes logoShimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
 .vc-logo:hover {
-  background: linear-gradient(135deg, var(--vc-red) 0%, #ffffff 100%);
+  background: linear-gradient(135deg, var(--vc-orange) 0%, var(--vc-red) 50%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px var(--vc-orange-glow));
+  animation: none;
 }
 
 .vc-nav {
@@ -317,11 +344,14 @@ a:focus-visible {
 }
 
 /* ============================================
-   HERO SECTION - DRAMATIC & INTERACTIVE
+   HERO SECTION - UNIQUE & DRAMATIC
    ============================================ */
 
 .vc-hero {
-  background: linear-gradient(135deg, var(--vc-black) 0%, var(--vc-black-light) 50%, var(--vc-black) 100%);
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(225, 6, 0, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, var(--vc-black) 0%, var(--vc-black-light) 50%, var(--vc-black) 100%);
   color: #ffffff;
   padding: var(--vc-spacing-2xl) 2rem;
   text-align: center;
@@ -331,6 +361,78 @@ a:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Animated Grid Overlay */
+.vc-hero__grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(225, 6, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(225, 6, 0, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Particle Effect */
+.vc-hero__particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, var(--vc-red), transparent),
+    radial-gradient(2px 2px at 60% 70%, var(--vc-orange), transparent),
+    radial-gradient(1px 1px at 50% 50%, var(--vc-amber), transparent),
+    radial-gradient(1px 1px at 80% 10%, var(--vc-red), transparent),
+    radial-gradient(2px 2px at 90% 40%, var(--vc-orange), transparent),
+    radial-gradient(1px 1px at 33% 60%, var(--vc-red), transparent),
+    radial-gradient(1px 1px at 66% 20%, var(--vc-amber), transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: particlesFloat 20s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+@keyframes particlesFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* Scanline Effect */
+.vc-hero__scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(225, 6, 0, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 2;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
 }
 
 .vc-hero::before {
@@ -343,6 +445,7 @@ a:focus-visible {
   background: radial-gradient(circle, var(--vc-red-glow) 0%, transparent 70%);
   animation: pulse 8s ease-in-out infinite;
   pointer-events: none;
+  z-index: 0;
 }
 
 .vc-hero::after {
@@ -353,11 +456,12 @@ a:focus-visible {
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(45deg, transparent 30%, rgba(225, 6, 0, 0.05) 50%, transparent 70%),
+    linear-gradient(45deg, transparent 30%, rgba(255, 107, 53, 0.05) 50%, transparent 70%),
     linear-gradient(-45deg, transparent 30%, rgba(225, 6, 0, 0.05) 50%, transparent 70%);
   background-size: 200% 200%;
   animation: gradientShift 15s ease infinite;
   pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes pulse {
@@ -375,9 +479,10 @@ a:focus-visible {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
+/* Glitch Effect Headline */
 .vc-hero__headline {
   font-size: clamp(3rem, 10vw, 6rem);
   font-weight: 900;
@@ -385,13 +490,58 @@ a:focus-visible {
   letter-spacing: -0.04em;
   line-height: 1.1;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #ffffff 0%, var(--vc-red) 50%, #ffffff 100%);
+  position: relative;
+  display: inline-block;
+}
+
+.vc-hero__headline-text {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, #ffffff 0%, var(--vc-red) 30%, var(--vc-orange) 60%, #ffffff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 3s linear infinite;
-  text-shadow: 0 0 40px var(--vc-red-glow);
+  filter: drop-shadow(0 0 20px var(--vc-red-glow)) drop-shadow(0 0 40px var(--vc-orange-glow));
+}
+
+.vc-hero__headline-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--vc-red) 0%, var(--vc-orange) 50%, var(--vc-red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  z-index: 1;
+  opacity: 0;
+  animation: glitch 4s infinite;
+}
+
+@keyframes glitch {
+  0%, 90%, 100% {
+    opacity: 0;
+    transform: translate(0);
+  }
+  92% {
+    opacity: 0.8;
+    transform: translate(-2px, 2px);
+  }
+  94% {
+    opacity: 0.8;
+    transform: translate(2px, -2px);
+  }
+  96% {
+    opacity: 0.8;
+    transform: translate(-2px, -2px);
+  }
+  98% {
+    opacity: 0.8;
+    transform: translate(2px, 2px);
+  }
 }
 
 @keyframes shimmer {
@@ -407,10 +557,76 @@ a:focus-visible {
   margin-right: auto;
   font-weight: 400;
   line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .vc-hero__cta {
   margin-top: var(--vc-spacing-xl);
+}
+
+/* Neon Button Effect */
+.vc-button--neon {
+  position: relative;
+  overflow: visible;
+  background: var(--vc-red);
+  box-shadow: 
+    0 0 10px var(--vc-red),
+    0 0 20px var(--vc-red),
+    0 0 30px var(--vc-red),
+    0 0 40px var(--vc-red);
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+.vc-button--neon .vc-button__glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--vc-red), var(--vc-orange), var(--vc-red));
+  border-radius: var(--vc-radius);
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(8px);
+  animation: glowRotate 3s linear infinite;
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px var(--vc-red),
+      0 0 20px var(--vc-red),
+      0 0 30px var(--vc-red),
+      0 0 40px var(--vc-red);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px var(--vc-red),
+      0 0 30px var(--vc-red),
+      0 0 40px var(--vc-red),
+      0 0 50px var(--vc-red),
+      0 0 60px var(--vc-orange);
+  }
+}
+
+@keyframes glowRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.vc-button--neon:hover {
+  animation: none;
+  box-shadow: 
+    0 0 20px var(--vc-red),
+    0 0 40px var(--vc-red),
+    0 0 60px var(--vc-red),
+    0 0 80px var(--vc-red),
+    0 0 100px var(--vc-orange);
+}
+
+.vc-button__text {
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================
@@ -481,11 +697,31 @@ a:focus-visible {
   margin-bottom: var(--vc-spacing-sm);
   filter: drop-shadow(0 0 10px var(--vc-red-glow));
   transition: var(--vc-transition);
+  position: relative;
+  display: inline-block;
+}
+
+.vc-trust-badge__icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--vc-orange-glow) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  transition: transform var(--vc-transition);
+  z-index: -1;
 }
 
 .vc-trust-badge:hover .vc-trust-badge__icon {
   transform: scale(1.2) rotate(5deg);
-  filter: drop-shadow(0 0 20px var(--vc-red-glow-strong));
+  filter: drop-shadow(0 0 20px var(--vc-red-glow-strong)) drop-shadow(0 0 30px var(--vc-orange-glow));
+}
+
+.vc-trust-badge:hover .vc-trust-badge__icon::before {
+  transform: translate(-50%, -50%) scale(2);
 }
 
 .vc-trust-badge__title {
