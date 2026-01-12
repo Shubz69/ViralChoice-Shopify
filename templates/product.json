@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "vc-header": {
+      "type": "header",
+      "settings": {}
+    },
+    "main-product": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "vc-header",
+    "main-product",
+    "footer"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "sections": {
+    "vc-header": {
+      "type": "header",
+      "settings": {}
+    },
+    "vc-hero": {
+      "type": "vc-hero",
+      "settings": {
+        "headline": "Discover Viral Products That Actually Work",
+        "subheadline": "Join thousands of satisfied customers who found their next favorite product",
+        "cta_text": "Shop Now",
+        "cta_link": "/products"
+      }
+    },
+    "vc-trust-strip": {
+      "type": "vc-trust-strip",
+      "settings": {}
+    },
+    "vc-featured-product": {
+      "type": "vc-featured-product",
+      "settings": {
+        "title": "Featured Product"
+      }
+    },
+    "vc-why-section": {
+      "type": "vc-why-section",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "vc-header",
+    "vc-hero",
+    "vc-trust-strip",
+    "vc-featured-product",
+    "vc-why-section",
+    "footer"
+  ]
+}

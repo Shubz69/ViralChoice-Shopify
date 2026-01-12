@@ -1,0 +1,47 @@
+{% comment %}
+  ViralChoice Header Section
+  Minimal header with logo and navigation
+{% endcomment %}
+
+<header class="vc-header">
+  <div class="vc-header__inner">
+    <a href="{{ routes.root_url }}" class="vc-logo">
+      {{ section.settings.logo_text | default: 'ViralChoice' }}
+    </a>
+    
+    <nav class="vc-nav">
+      {% for link in linklists[section.settings.menu].links %}
+        <a href="{{ link.url }}" class="vc-nav__link">
+          {{ link.title }}
+        </a>
+      {% endfor %}
+      
+      <a href="{{ routes.cart_url }}" class="vc-cart-icon">
+        Cart
+        {% if cart.item_count > 0 %}
+          <span class="vc-cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "VC Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "ViralChoice"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

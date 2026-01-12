@@ -1,0 +1,36 @@
+{% comment %}
+  ViralChoice Footer Section
+  Minimal footer with brand info
+{% endcomment %}
+
+<footer style="background-color: #0B0B0B; color: #FFFFFF; padding: 3rem 2rem; text-align: center; margin-top: 4rem;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <p style="margin: 0; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem;">
+      {{ section.settings.footer_text | default: 'ViralChoice' }}
+    </p>
+    <p style="margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 0.875rem;">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "VC Footer",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "ViralChoice"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Footer"
+    }
+  ]
+}
+{% endschema %}

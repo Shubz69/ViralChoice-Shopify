@@ -1,0 +1,72 @@
+{% comment %}
+  ViralChoice Hero Section
+  Displays headline, subheadline, and CTA button
+{% endcomment %}
+
+<section class="vc-hero vc-reveal">
+  <div class="vc-hero__inner">
+    {% if section.settings.headline != blank %}
+      <h1 class="vc-hero__headline">{{ section.settings.headline }}</h1>
+    {% else %}
+      <h1 class="vc-hero__headline">Discover Viral Products That Actually Work</h1>
+    {% endif %}
+    
+    {% if section.settings.subheadline != blank %}
+      <p class="vc-hero__subheadline">{{ section.settings.subheadline }}</p>
+    {% else %}
+      <p class="vc-hero__subheadline">Join thousands of satisfied customers who found their next favorite product</p>
+    {% endif %}
+    
+    {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+      <div class="vc-hero__cta">
+        <a href="{{ section.settings.cta_link }}" class="vc-button vc-button--primary vc-button--large">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {% else %}
+      <div class="vc-hero__cta">
+        <a href="/products" class="vc-button vc-button--primary vc-button--large">
+          Shop Now
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Discover Viral Products That Actually Work"
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Join thousands of satisfied customers who found their next favorite product"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Hero"
+    }
+  ]
+}
+{% endschema %}

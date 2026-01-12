@@ -1,0 +1,44 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Horizon",
+    "theme_version": "1.0.0",
+    "theme_author": "ViralChoice",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary_black",
+        "label": "Primary Black",
+        "default": "#0B0B0B"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_red",
+        "label": "Primary Red",
+        "default": "#E10600"
+      },
+      {
+        "type": "color",
+        "id": "color_white",
+        "label": "White",
+        "default": "#FFFFFF"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Logo Text",
+        "default": "ViralChoice"
+      }
+    ]
+  }
+]

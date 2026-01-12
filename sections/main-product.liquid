@@ -1,0 +1,204 @@
+{% comment %}
+  ViralChoice Main Product Section
+  Enhanced product page with trust badges, FAQ, and sticky mobile CTA
+{% endcomment %}
+
+<div class="vc-product-section">
+  <div class="vc-product-grid">
+    {% comment %} Product Images {% endcomment %}
+    <div class="vc-product-images">
+      <div class="vc-product-image">
+        {% if product.featured_image %}
+          <img 
+            src="{{ product.featured_image | image_url: width: 800 }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            id="ProductImage-{{ section.id }}"
+            loading="lazy"
+            width="800"
+            height="{{ 800 | divided_by: product.featured_image.aspect_ratio | ceil }}"
+          >
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+      
+      {% if product.images.size > 1 %}
+        <div class="vc-product-thumbnails" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          {% for image in product.images %}
+            <div class="vc-product-thumbnail" style="cursor: pointer; border: 2px solid transparent; border-radius: 8px; overflow: hidden; transition: all 0.2s;">
+              <img 
+                src="{{ image | image_url: width: 160 }}"
+                alt="{{ image.alt | escape }}"
+                onclick="document.getElementById('ProductImage-{{ section.id }}').src = '{{ image | image_url: width: 800 }}'"
+                loading="lazy"
+                width="160"
+                height="{{ 160 | divided_by: image.aspect_ratio | ceil }}"
+                style="width: 100%; height: auto; display: block;"
+              >
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    
+    {% comment %} Product Info {% endcomment %}
+    <div class="vc-product-info">
+      <h1 class="vc-product-title">{{ product.title }}</h1>
+      
+      <div class="vc-product-price">
+        {{ product.price | money }}
+        {% if product.compare_at_price > product.price %}
+          <span style="text-decoration: line-through; color: #999; font-size: 1.25rem; margin-left: 0.5rem;">
+            {{ product.compare_at_price | money }}
+          </span>
+        {% endif %}
+      </div>
+      
+      {% comment %} Trust Badges {% endcomment %}
+      {% render 'vc-trust-badges' %}
+      
+      {% if product.description != blank %}
+        <div class="vc-product-description">
+          {{ product.description }}
+        </div>
+      {% endif %}
+      
+      {% comment %} Product Form {% endcomment %}
+      <product-form class="vc-product-form">
+        {% form 'product', product, id: 'product-form', class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+          
+          {% if product.variants.size > 1 %}
+            <div class="vc-form-group">
+              <label for="product-select-{{ section.id }}" class="vc-form-label">
+                Select Option
+              </label>
+              <select 
+                name="id" 
+                id="product-select-{{ section.id }}"
+                class="vc-form-select"
+              >
+                {% for variant in product.variants %}
+                  <option 
+                    value="{{ variant.id }}"
+                    {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                    {{ variant.title }} - {{ variant.price | money }}
+                    {% unless variant.available %} ({{ 'products.product.sold_out' | t }}){% endunless %}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endif %}
+          
+          <div class="vc-form-group">
+            <label for="Quantity-{{ section.id }}" class="vc-form-label">
+              {{ 'products.product.quantity' | t }}
+            </label>
+            <input 
+              type="number" 
+              id="Quantity-{{ section.id }}"
+              name="quantity" 
+              value="1" 
+              min="1"
+              class="vc-form-input"
+            >
+          </div>
+          
+          <div class="vc-add-to-cart-wrapper">
+            <button
+              type="submit"
+              name="add"
+              class="vc-button vc-button--primary vc-add-to-cart-button"
+              id="product-submit-{{ section.id }}"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+            >
+              <span>
+                {% if product.selected_or_first_available_variant.available %}
+                  {{ 'products.product.add_to_cart' | t }}
+                {% else %}
+                  {{ 'products.product.sold_out' | t }}
+                {% endif %}
+              </span>
+            </button>
+          </div>
+        {% endform %}
+      </product-form>
+      
+      {% comment %} FAQ Accordion {% endcomment %}
+      <div class="vc-faq">
+        <h2 class="vc-faq__title">Frequently Asked Questions</h2>
+        
+        <div class="vc-faq-item">
+          <button class="vc-faq-question" type="button">
+            Shipping Information
+          </button>
+          <div class="vc-faq-answer">
+            <p>We offer fast and secure shipping to customers worldwide. Standard shipping typically takes 5-7 business days. Express shipping options are available at checkout for faster delivery.</p>
+          </div>
+        </div>
+        
+        <div class="vc-faq-item">
+          <button class="vc-faq-question" type="button">
+            Returns & Refunds
+          </button>
+          <div class="vc-faq-answer">
+            <p>We offer a 30-day money-back guarantee. If you're not completely satisfied with your purchase, you can return it for a full refund. Items must be in original condition and packaging.</p>
+          </div>
+        </div>
+        
+        <div class="vc-faq-item">
+          <button class="vc-faq-question" type="button">
+            Product Guarantee
+          </button>
+          <div class="vc-faq-answer">
+            <p>All our products are carefully selected and tested. We stand behind the quality of every item we sell. If you experience any issues, our customer support team is here to help.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} Sticky Mobile Add to Cart {% endcomment %}
+<div class="vc-sticky-atc">
+  <div class="vc-sticky-atc__inner">
+    <div class="vc-sticky-atc__price">
+      {{ product.price | money }}
+    </div>
+    <button 
+      type="button"
+      class="vc-button vc-button--primary vc-sticky-atc__button"
+      onclick="document.getElementById('product-submit-{{ section.id }}').click()"
+    >
+      {{ 'products.product.add_to_cart' | t }}
+    </button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const productForm = document.querySelector('#product-form');
+    const productSelect = document.querySelector('#product-select-{{ section.id }}');
+    
+    if (productSelect) {
+      productSelect.addEventListener('change', function() {
+        const selectedVariantId = this.value;
+        const hiddenInput = productForm.querySelector('input[name="id"]');
+        if (hiddenInput) {
+          hiddenInput.value = selectedVariantId;
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "VC Main Product",
+  "tag": "section",
+  "class": "section",
+  "settings": []
+}
+{% endschema %}

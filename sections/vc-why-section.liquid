@@ -1,0 +1,127 @@
+{% comment %}
+  ViralChoice Why Section
+  Displays 3 bullet points about why choose ViralChoice
+{% endcomment %}
+
+<section class="vc-why-section vc-reveal">
+  <div class="vc-why-section__inner">
+    {% if section.settings.title != blank %}
+      <h2 class="vc-why-section__title">{{ section.settings.title }}</h2>
+    {% else %}
+      <h2 class="vc-why-section__title">Why ViralChoice?</h2>
+    {% endif %}
+    
+    <div class="vc-why-grid">
+      <div class="vc-why-item">
+        <div class="vc-why-item__icon">🎯</div>
+        <h3 class="vc-why-item__title">
+          {% if section.settings.point1_title != blank %}
+            {{ section.settings.point1_title }}
+          {% else %}
+            Curated Selection
+          {% endif %}
+        </h3>
+        <p class="vc-why-item__text">
+          {% if section.settings.point1_text != blank %}
+            {{ section.settings.point1_text }}
+          {% else %}
+            We handpick only the most viral and effective products that have proven results.
+          {% endif %}
+        </p>
+      </div>
+      
+      <div class="vc-why-item">
+        <div class="vc-why-item__icon">⚡</div>
+        <h3 class="vc-why-item__title">
+          {% if section.settings.point2_title != blank %}
+            {{ section.settings.point2_title }}
+          {% else %}
+            Lightning Fast
+          {% endif %}
+        </h3>
+        <p class="vc-why-item__text">
+          {% if section.settings.point2_text != blank %}
+            {{ section.settings.point2_text }}
+          {% else %}
+            Get your products delivered quickly so you can start enjoying them right away.
+          {% endif %}
+        </p>
+      </div>
+      
+      <div class="vc-why-item">
+        <div class="vc-why-item__icon">💯</div>
+        <h3 class="vc-why-item__title">
+          {% if section.settings.point3_title != blank %}
+            {{ section.settings.point3_title }}
+          {% else %}
+            Trusted Guarantee
+          {% endif %}
+        </h3>
+        <p class="vc-why-item__text">
+          {% if section.settings.point3_text != blank %}
+            {{ section.settings.point3_text }}
+          {% else %}
+            Your satisfaction is our priority. 30-day money-back guarantee on all products.
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Why Section",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Why ViralChoice?"
+    },
+    {
+      "type": "text",
+      "id": "point1_title",
+      "label": "Point 1 Title",
+      "default": "Curated Selection"
+    },
+    {
+      "type": "textarea",
+      "id": "point1_text",
+      "label": "Point 1 Text",
+      "default": "We handpick only the most viral and effective products that have proven results."
+    },
+    {
+      "type": "text",
+      "id": "point2_title",
+      "label": "Point 2 Title",
+      "default": "Lightning Fast"
+    },
+    {
+      "type": "textarea",
+      "id": "point2_text",
+      "label": "Point 2 Text",
+      "default": "Get your products delivered quickly so you can start enjoying them right away."
+    },
+    {
+      "type": "text",
+      "id": "point3_title",
+      "label": "Point 3 Title",
+      "default": "Trusted Guarantee"
+    },
+    {
+      "type": "textarea",
+      "id": "point3_text",
+      "label": "Point 3 Text",
+      "default": "Your satisfaction is our priority. 30-day money-back guarantee on all products."
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Why Section"
+    }
+  ]
+}
+{% endschema %}
