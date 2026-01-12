@@ -1,10 +1,13 @@
 /* ============================================
    VIRALCHOICE INTERACTIVE JAVASCRIPT
-   Lightweight vanilla JS for interactions
+   Lightweight vanilla JS - respects prefers-reduced-motion
    ============================================ */
 
 (function() {
   'use strict';
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ============================================
   // FAQ ACCORDION
@@ -12,6 +15,7 @@
   
   function initFAQ() {
     const faqItems = document.querySelectorAll('.vc-faq-item');
+    if (faqItems.length === 0) return;
     
     faqItems.forEach(item => {
       const question = item.querySelector('.vc-faq-question');
@@ -28,11 +32,7 @@
         });
         
         // Toggle current item
-        if (isOpen) {
-          item.classList.remove('is-open');
-        } else {
-          item.classList.add('is-open');
-        }
+        item.classList.toggle('is-open', !isOpen);
       });
     });
   }
@@ -49,27 +49,28 @@
     if (!mainATCButton) return;
     
     let isVisible = false;
+    let ticking = false;
     
     function checkScroll() {
+      // Only show on mobile
       if (window.innerWidth > 768) {
-        stickyATC.classList.remove('is-visible');
+        if (isVisible) {
+          stickyATC.classList.remove('is-visible');
+          isVisible = false;
+        }
         return;
       }
       
       const mainButtonRect = mainATCButton.getBoundingClientRect();
       const shouldShow = mainButtonRect.bottom < 0;
       
-      if (shouldShow && !isVisible) {
-        stickyATC.classList.add('is-visible');
-        isVisible = true;
-      } else if (!shouldShow && isVisible) {
-        stickyATC.classList.remove('is-visible');
-        isVisible = false;
+      if (shouldShow !== isVisible) {
+        isVisible = shouldShow;
+        stickyATC.classList.toggle('is-visible', shouldShow);
       }
     }
     
-    // Throttle scroll events
-    let ticking = false;
+    // Throttled scroll handler
     window.addEventListener('scroll', () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -78,7 +79,7 @@
         });
         ticking = true;
       }
-    });
+    }, { passive: true });
     
     // Handle click on sticky button
     const stickyButton = stickyATC.querySelector('.vc-sticky-atc__button');
@@ -88,13 +89,19 @@
         mainATCButton.click();
       });
     }
+    
+    // Check on resize
+    window.addEventListener('resize', checkScroll, { passive: true });
   }
 
   // ============================================
-  // SCROLL REVEAL ANIMATION
+  // SCROLL REVEAL ANIMATION (Lightweight)
   // ============================================
   
   function initScrollReveal() {
+    // Skip if user prefers reduced motion
+    if (prefersReducedMotion) return;
+    
     const revealElements = document.querySelectorAll('.vc-reveal');
     if (revealElements.length === 0) return;
     
@@ -107,18 +114,24 @@
       });
     }, {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -30px 0px'
     });
     
     revealElements.forEach(el => observer.observe(el));
   }
 
   // ============================================
-  // SMOOTH PRODUCT IMAGE ZOOM
+  // PRODUCT IMAGE ZOOM (Desktop only, respects motion)
   // ============================================
   
   function initProductImageZoom() {
+    if (prefersReducedMotion) return;
+    
     const productImages = document.querySelectorAll('.vc-product-image');
+    if (productImages.length === 0) return;
+    
+    // Only on desktop
+    if (window.innerWidth <= 768) return;
     
     productImages.forEach(image => {
       const img = image.querySelector('img');
@@ -126,11 +139,11 @@
       
       image.addEventListener('mouseenter', () => {
         img.style.transform = 'scale(1.05)';
-      });
+      }, { passive: true });
       
       image.addEventListener('mouseleave', () => {
         img.style.transform = 'scale(1)';
-      });
+      }, { passive: true });
     });
   }
 

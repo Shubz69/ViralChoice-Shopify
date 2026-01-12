@@ -23,17 +23,15 @@
       </div>
       
       {% if product.images.size > 1 %}
-        <div class="vc-product-thumbnails" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <div class="vc-product-thumbnails">
           {% for image in product.images %}
-            <div class="vc-product-thumbnail" style="cursor: pointer; border: 2px solid transparent; border-radius: 8px; overflow: hidden; transition: all 0.2s;">
+            <div class="vc-product-thumbnail" data-image-src="{{ image | image_url: width: 800 }}">
               <img 
                 src="{{ image | image_url: width: 160 }}"
                 alt="{{ image.alt | escape }}"
-                onclick="document.getElementById('ProductImage-{{ section.id }}').src = '{{ image | image_url: width: 800 }}'"
                 loading="lazy"
                 width="160"
                 height="{{ 160 | divided_by: image.aspect_ratio | ceil }}"
-                style="width: 100%; height: auto; display: block;"
               >
             </div>
           {% endfor %}
@@ -48,7 +46,7 @@
       <div class="vc-product-price">
         {{ product.price | money }}
         {% if product.compare_at_price > product.price %}
-          <span style="text-decoration: line-through; color: #999; font-size: 1.25rem; margin-left: 0.5rem;">
+          <span style="text-decoration: line-through; opacity: 0.5; font-size: 1.25rem; margin-left: 0.5rem;">
             {{ product.compare_at_price | money }}
           </span>
         {% endif %}
@@ -178,20 +176,47 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const productForm = document.querySelector('#product-form');
-    const productSelect = document.querySelector('#product-select-{{ section.id }}');
+  (function() {
+    'use strict';
     
-    if (productSelect) {
-      productSelect.addEventListener('change', function() {
-        const selectedVariantId = this.value;
-        const hiddenInput = productForm.querySelector('input[name="id"]');
-        if (hiddenInput) {
-          hiddenInput.value = selectedVariantId;
-        }
-      });
+    function initProductPage() {
+      // Variant selector
+      const productForm = document.querySelector('#product-form');
+      const productSelect = document.querySelector('#product-select-{{ section.id }}');
+      
+      if (productSelect && productForm) {
+        productSelect.addEventListener('change', function() {
+          const selectedVariantId = this.value;
+          const hiddenInput = productForm.querySelector('input[name="id"]');
+          if (hiddenInput) {
+            hiddenInput.value = selectedVariantId;
+            hiddenInput.removeAttribute('disabled');
+          }
+        });
+      }
+      
+      // Image thumbnails
+      const thumbnails = document.querySelectorAll('.vc-product-thumbnail');
+      const mainImage = document.getElementById('ProductImage-{{ section.id }}');
+      
+      if (thumbnails.length > 0 && mainImage) {
+        thumbnails.forEach(thumb => {
+          thumb.addEventListener('click', function() {
+            const imageSrc = this.getAttribute('data-image-src');
+            if (imageSrc) {
+              mainImage.src = imageSrc;
+            }
+          });
+        });
+      }
     }
-  });
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProductPage);
+    } else {
+      initProductPage();
+    }
+  })();
 </script>
 
 {% schema %}

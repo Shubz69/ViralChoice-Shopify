@@ -17,30 +17,28 @@
         <h2 class="vc-featured-product__title">Featured Product</h2>
       {% endif %}
       
-      <div class="vc-featured-product-card">
-        <a href="{{ featured_product.url }}">
-          {% if featured_product.featured_image %}
-            <img 
-              src="{{ featured_product.featured_image | image_url: width: 500 }}"
-              alt="{{ featured_product.featured_image.alt | escape }}"
-              class="vc-featured-product-card__image"
-              loading="lazy"
-              width="500"
-              height="{{ 500 | divided_by: featured_product.featured_image.aspect_ratio | ceil }}"
-            >
-          {% endif %}
-          
-          <h3 class="vc-featured-product-card__title">{{ featured_product.title }}</h3>
-          
-          <div class="vc-featured-product-card__price">
-            {{ featured_product.price | money }}
-          </div>
-          
-          <a href="{{ featured_product.url }}" class="vc-button vc-button--primary">
-            View Product
-          </a>
-        </a>
-      </div>
+      <a href="{{ featured_product.url }}" class="vc-featured-product-card">
+        {% if featured_product.featured_image %}
+          <img 
+            src="{{ featured_product.featured_image | image_url: width: 500 }}"
+            alt="{{ featured_product.featured_image.alt | escape }}"
+            class="vc-featured-product-card__image"
+            loading="lazy"
+            width="500"
+            height="{{ 500 | divided_by: featured_product.featured_image.aspect_ratio | ceil }}"
+          >
+        {% endif %}
+        
+        <h3 class="vc-featured-product-card__title">{{ featured_product.title }}</h3>
+        
+        <div class="vc-featured-product-card__price">
+          {{ featured_product.price | money }}
+        </div>
+        
+        <span class="vc-button vc-button--primary">
+          View Product
+        </span>
+      </a>
     </div>
   </section>
 {% endif %}

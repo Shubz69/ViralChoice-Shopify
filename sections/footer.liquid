@@ -1,14 +1,30 @@
 {% comment %}
   ViralChoice Footer Section
-  Minimal footer with brand info
+  Minimal footer with policies and contact
 {% endcomment %}
 
-<footer style="background-color: #0B0B0B; color: #FFFFFF; padding: 3rem 2rem; text-align: center; margin-top: 4rem;">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <p style="margin: 0; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem;">
+<footer class="vc-footer">
+  <div class="vc-footer__inner">
+    <p class="vc-footer__brand">
       {{ section.settings.footer_text | default: 'ViralChoice' }}
     </p>
-    <p style="margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 0.875rem;">
+    
+    <nav class="vc-footer__links">
+      {% if shop.policies.refund-policy %}
+        <a href="{{ shop.policies.refund-policy.url }}" class="vc-footer__link">Refund Policy</a>
+      {% endif %}
+      {% if shop.policies.privacy-policy %}
+        <a href="{{ shop.policies.privacy-policy.url }}" class="vc-footer__link">Privacy Policy</a>
+      {% endif %}
+      {% if shop.policies.terms-of-service %}
+        <a href="{{ shop.policies.terms-of-service.url }}" class="vc-footer__link">Terms of Service</a>
+      {% endif %}
+      {% if pages.contact %}
+        <a href="{{ pages.contact.url }}" class="vc-footer__link">Contact</a>
+      {% endif %}
+    </nav>
+    
+    <p class="vc-footer__copyright">
       &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
     </p>
   </div>
