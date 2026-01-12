@@ -2163,6 +2163,11 @@ a:focus-visible {
 .vc-quantity-btn:hover {
   background: var(--vc-blue);
   color: #ffffff;
+  transform: scale(1.1);
+}
+
+.vc-quantity-btn:active {
+  transform: scale(0.95);
 }
 
 .vc-quantity-input {
