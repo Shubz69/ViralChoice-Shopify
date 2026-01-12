@@ -74,8 +74,6 @@
       {% comment %} Product Form {% endcomment %}
       <product-form class="vc-product-form">
         {% form 'product', product, id: 'product-form', class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-          
           {% if product.variants.size > 1 %}
             <div class="vc-form-group">
               <label for="product-select-{{ section.id }}" class="vc-form-label">
@@ -85,6 +83,7 @@
                 name="id" 
                 id="product-select-{{ section.id }}"
                 class="vc-form-select"
+                required
               >
                 {% for variant in product.variants %}
                   <option 
@@ -98,6 +97,8 @@
                 {% endfor %}
               </select>
             </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
           {% endif %}
           
           <div class="vc-form-group">
