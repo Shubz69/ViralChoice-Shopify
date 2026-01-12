@@ -432,37 +432,27 @@
       });
     });
     
-    // Add loading states to buttons
-    const buttons = document.querySelectorAll('.vc-button[type="submit"], .vc-button[href]');
-    buttons.forEach(button => {
+    // Add loading states to submit buttons
+    const submitButtons = document.querySelectorAll('.vc-button[type="submit"]');
+    submitButtons.forEach(button => {
       button.addEventListener('click', function() {
-        if (this.type === 'submit' || this.tagName === 'BUTTON') {
-          this.style.opacity = '0.7';
-          this.style.pointerEvents = 'none';
-          
-          setTimeout(() => {
-            this.style.opacity = '';
-            this.style.pointerEvents = '';
-          }, 2000);
-        }
+        const originalText = this.textContent;
+        this.style.opacity = '0.7';
+        this.style.pointerEvents = 'none';
+        
+        setTimeout(() => {
+          this.style.opacity = '';
+          this.style.pointerEvents = '';
+        }, 2000);
       });
     });
     
-    // Enhanced card interactions
+    // Enhanced card interactions with ripple for cards
     const cards = document.querySelectorAll('.vc-trust-badge, .vc-why-item, .vc-featured-product-card, .vc-collection-item');
     cards.forEach(card => {
-      card.addEventListener('mouseenter', function() {
-        if (!prefersReducedMotion) {
-          this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-        }
-      });
-    });
-    
-    // Add ripple effect to interactive elements
-    const interactiveElements = document.querySelectorAll('.vc-button, .vc-trust-badge, .vc-why-item');
-    interactiveElements.forEach(element => {
-      element.addEventListener('click', function(e) {
+      card.addEventListener('click', function(e) {
         if (prefersReducedMotion) return;
+        if (this.querySelector('a')) return; // Don't add ripple if card has a link
         
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
@@ -476,11 +466,12 @@
           height: ${size}px;
           left: ${x}px;
           top: ${y}px;
-          background: rgba(255, 255, 255, 0.3);
+          background: rgba(74, 144, 226, 0.3);
           border-radius: 50%;
           transform: scale(0);
           animation: ripple 0.6s ease-out;
           pointer-events: none;
+          z-index: 0;
         `;
         
         if (!this.style.position || this.style.position === 'static') {
@@ -492,21 +483,6 @@
         setTimeout(() => ripple.remove(), 600);
       });
     });
-    
-    // Add ripple animation if not exists
-    if (!document.getElementById('vc-ripple-style')) {
-      const style = document.createElement('style');
-      style.id = 'vc-ripple-style';
-      style.textContent = `
-        @keyframes ripple {
-          to {
-            transform: scale(4);
-            opacity: 0;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
   }
   
   // Start initialization
