@@ -1442,20 +1442,21 @@ a:focus-visible {
    SCROLL REVEAL ANIMATION
    ============================================ */
 
-/* Sections visible by default, animate in on scroll */
+/* Sections visible by default - graceful degradation */
 .vc-reveal {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
+/* Animate in on scroll only if JS is enabled and motion is preferred */
 @media (prefers-reduced-motion: no-preference) {
-  .vc-reveal {
+  .js .vc-reveal:not(.is-visible) {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.4s ease-out, transform 0.4s ease-out;
   }
 
-  .vc-reveal.is-visible {
+  .js .vc-reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
