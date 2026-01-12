@@ -406,7 +406,107 @@
     initTrustBadges();
     initParallax();
     initHeaderScroll();
+    initModernInteractions();
     // Particle and cursor trail effects removed for professional design
+  }
+  
+  // ============================================
+  // MODERN INTERACTIVE FEATURES
+  // ============================================
+  
+  function initModernInteractions() {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Add loading states to buttons
+    const buttons = document.querySelectorAll('.vc-button[type="submit"], .vc-button[href]');
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        if (this.type === 'submit' || this.tagName === 'BUTTON') {
+          this.style.opacity = '0.7';
+          this.style.pointerEvents = 'none';
+          
+          setTimeout(() => {
+            this.style.opacity = '';
+            this.style.pointerEvents = '';
+          }, 2000);
+        }
+      });
+    });
+    
+    // Enhanced card interactions
+    const cards = document.querySelectorAll('.vc-trust-badge, .vc-why-item, .vc-featured-product-card, .vc-collection-item');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        if (!prefersReducedMotion) {
+          this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+      });
+    });
+    
+    // Add ripple effect to interactive elements
+    const interactiveElements = document.querySelectorAll('.vc-button, .vc-trust-badge, .vc-why-item');
+    interactiveElements.forEach(element => {
+      element.addEventListener('click', function(e) {
+        if (prefersReducedMotion) return;
+        
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}px;
+          top: ${y}px;
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s ease-out;
+          pointer-events: none;
+        `;
+        
+        if (!this.style.position || this.style.position === 'static') {
+          this.style.position = 'relative';
+        }
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+    
+    // Add ripple animation if not exists
+    if (!document.getElementById('vc-ripple-style')) {
+      const style = document.createElement('style');
+      style.id = 'vc-ripple-style';
+      style.textContent = `
+        @keyframes ripple {
+          to {
+            transform: scale(4);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
   }
   
   // Start initialization

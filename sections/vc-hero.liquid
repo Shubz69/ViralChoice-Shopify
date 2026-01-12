@@ -23,14 +23,16 @@
     
     {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
       <div class="vc-hero__cta">
-        <a href="{{ section.settings.cta_link }}" class="vc-button vc-button--primary vc-button--large">
+        <a href="{{ section.settings.cta_link }}" class="vc-button vc-button--primary vc-button--large vc-button--animated">
           {{ section.settings.cta_text }}
+          <span class="vc-button__arrow">→</span>
         </a>
       </div>
     {% else %}
       <div class="vc-hero__cta">
-        <a href="/products" class="vc-button vc-button--primary vc-button--large">
+        <a href="{{ routes.all_products_collection_url }}" class="vc-button vc-button--primary vc-button--large vc-button--animated">
           Shop Now
+          <span class="vc-button__arrow">→</span>
         </a>
       </div>
     {% endif %}

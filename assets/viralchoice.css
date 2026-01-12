@@ -235,6 +235,21 @@ a:focus-visible {
   font-size: 1.125rem;
 }
 
+.vc-button--animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.vc-button__arrow {
+  display: inline-block;
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.vc-button--animated:hover .vc-button__arrow {
+  transform: translateX(5px);
+}
+
 .vc-button:focus-visible {
   outline: 2px solid var(--vc-blue);
   outline-offset: 4px;
@@ -482,12 +497,13 @@ a:focus-visible {
   align-items: center;
   text-align: center;
   padding: var(--vc-spacing-lg);
-  background: rgba(11, 11, 11, 0.6);
+  background: rgba(26, 26, 31, 0.8);
   border: 1px solid rgba(74, 144, 226, 0.2);
   border-radius: var(--vc-radius-lg);
-  transition: var(--vc-transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .vc-trust-badge::before {
@@ -507,10 +523,14 @@ a:focus-visible {
 
 @media (prefers-reduced-motion: no-preference) {
   .vc-trust-badge:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--vc-blue);
-    box-shadow: var(var(--vc-shadow));
-    background: rgba(11, 11, 11, 0.8);
+    box-shadow: 0 12px 32px rgba(74, 144, 226, 0.3);
+    background: rgba(26, 26, 31, 0.95);
+  }
+  
+  .vc-trust-badge:active {
+    transform: translateY(-4px) scale(1);
   }
 }
 
@@ -701,11 +721,12 @@ a:focus-visible {
 @media (prefers-reduced-motion: no-preference) {
   .vc-product-image:hover {
     border-color: var(--vc-blue);
-    box-shadow: var(var(--vc-shadow));
+    box-shadow: 0 12px 32px rgba(74, 144, 226, 0.3);
+    transform: translateY(-4px);
   }
   
   .vc-product-image:hover img {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 }
 
@@ -728,8 +749,8 @@ a:focus-visible {
 .vc-product-thumbnail:hover,
 .vc-product-thumbnail.active {
   border-color: var(--vc-blue);
-  box-shadow: var(var(--vc-shadow));
-  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .vc-product-thumbnail img {
@@ -790,7 +811,7 @@ a:focus-visible {
   letter-spacing: 0.1em;
   border-radius: var(--vc-radius);
   margin-top: var(--vc-spacing-sm);
-  box-shadow: var(var(--vc-shadow));
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
   animation: badgePulse 2s ease-in-out infinite;
   position: relative;
   overflow: hidden;
@@ -1190,10 +1211,14 @@ a:focus-visible {
 
 @media (prefers-reduced-motion: no-preference) {
   .vc-why-item:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--vc-blue);
-    box-shadow: var(var(--vc-shadow));
-    background: rgba(11, 11, 11, 0.8);
+    box-shadow: 0 12px 32px rgba(74, 144, 226, 0.3);
+    background: rgba(26, 26, 31, 0.95);
+  }
+  
+  .vc-why-item:active {
+    transform: translateY(-4px) scale(1);
   }
 }
 
@@ -1307,7 +1332,11 @@ a:focus-visible {
   .vc-featured-product-card:hover {
     transform: translateY(-12px) scale(1.02);
     border-color: var(--vc-blue);
-    box-shadow: var(var(--vc-shadow));
+    box-shadow: 0 16px 48px rgba(74, 144, 226, 0.4);
+  }
+  
+  .vc-featured-product-card:active {
+    transform: translateY(-8px) scale(1.01);
   }
 }
 
@@ -1328,7 +1357,8 @@ a:focus-visible {
 
 .vc-featured-product-card:hover .vc-featured-product-card__image {
   border-color: var(--vc-blue);
-  box-shadow: var(var(--vc-shadow));
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
+  transform: scale(1.02);
 }
 
 .vc-featured-product-card__title {
@@ -1871,9 +1901,13 @@ a:focus-visible {
 
 @media (prefers-reduced-motion: no-preference) {
   .vc-collection-item:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--vc-blue);
-    box-shadow: var(var(--vc-shadow));
+    box-shadow: 0 12px 32px rgba(74, 144, 226, 0.3);
+  }
+  
+  .vc-collection-item:active {
+    transform: translateY(-4px) scale(1);
   }
 }
 
@@ -1901,7 +1935,17 @@ a:focus-visible {
 }
 
 .vc-collection-item:hover .vc-collection-item__image img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+}
+
+.vc-collection-item__image {
+  overflow: hidden;
+  border-radius: var(--vc-radius);
+  transition: var(--vc-transition);
+}
+
+.vc-collection-item:hover .vc-collection-item__image {
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.2);
 }
 
 .vc-collection-item__title {
@@ -2022,7 +2066,7 @@ a:focus-visible {
 @media (prefers-reduced-motion: no-preference) {
   .vc-cart-item:hover {
     border-color: var(--vc-blue);
-    box-shadow: var(var(--vc-shadow));
+    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
     transform: translateX(4px);
   }
 }
