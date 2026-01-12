@@ -79,6 +79,113 @@ Shopify Website/
 3. **Activate:**
    - Once uploaded, click "Actions" → "Publish" to make it live
 
+## 🚀 Automated Deployment (GitHub Actions)
+
+This repository includes GitHub Actions for automatic deployment to Shopify on every push to the `main` branch.
+
+### Setup GitHub Secrets
+
+Before the workflow can deploy, you need to configure three GitHub Secrets:
+
+1. Go to your GitHub repository → **Settings** → **Secrets and variables** → **Actions**
+2. Click **"New repository secret"** and add the following secrets:
+
+#### Required Secrets:
+
+| Secret Name | Description | Example |
+|------------|-------------|---------|
+| `SHOPIFY_FLAG_STORE` | Your Shopify store domain | `yourstore.myshopify.com` |
+| `SHOPIFY_FLAG_THEME_ID` | Your Shopify theme ID | `123456789012` |
+| `SHOPIFY_CLI_THEME_TOKEN` | Shopify Admin API token | See instructions below |
+
+### How to Obtain Shopify Admin API Token
+
+1. **Go to Shopify Admin:**
+   - Log into your Shopify store admin panel
+   - Navigate to: **Settings** → **Apps and sales channels** → **Develop apps**
+
+2. **Create a New App:**
+   - Click **"Create an app"**
+   - Name it (e.g., "GitHub Actions Deploy")
+   - Click **"Create app"**
+
+3. **Configure API Scopes:**
+   - Click **"Configure Admin API scopes"**
+   - Under **"Themes"**, check:
+     - ✅ `read_themes`
+     - ✅ `write_themes`
+   - Click **"Save"**
+
+4. **Install the App:**
+   - Click **"Install app"** at the top
+   - Confirm installation
+
+5. **Get the Access Token:**
+   - After installation, you'll see **"API credentials"**
+   - Copy the **"Admin API access token"** (starts with `shpat_...`)
+   - This is your `SHOPIFY_CLI_THEME_TOKEN` value
+
+6. **Add to GitHub Secrets:**
+   - Paste this token as the value for `SHOPIFY_CLI_THEME_TOKEN` secret
+
+### How to Find Your Shopify Theme ID
+
+**Method 1: From Shopify Admin**
+1. Go to **Online Store** → **Themes**
+2. Click on the theme you want to deploy to
+3. Look at the URL in your browser: `admin.shopify.com/store/YOURSTORE/themes/THEME_ID`
+4. The `THEME_ID` is the number at the end (e.g., `193424818518`)
+
+**Method 2: Using Shopify CLI**
+```bash
+shopify theme list --store yourstore.myshopify.com
+```
+This will list all themes with their IDs.
+
+### How It Works
+
+Once configured, the workflow will:
+- ✅ Automatically trigger on every push to `main` branch
+- ✅ Deploy your theme files to Shopify
+- ✅ Preserve theme editor customizations (ignores `config/settings_data.json`)
+- ✅ Safely deploy to live themes (uses `--allow-live` flag)
+
+### Manual Deployment (Local)
+
+If you want to deploy manually from your local machine:
+
+1. **Install Shopify CLI:**
+   ```bash
+   npm install -g @shopify/cli@latest
+   ```
+
+2. **Authenticate:**
+   ```bash
+   shopify auth login
+   ```
+
+3. **Deploy to a specific theme:**
+   ```bash
+   shopify theme push --store yourstore.myshopify.com --theme THEME_ID --allow-live
+   ```
+
+4. **Or deploy to a development theme:**
+   ```bash
+   shopify theme push --store yourstore.myshopify.com --development
+   ```
+
+### Workflow File
+
+The deployment workflow is located at:
+```
+.github/workflows/shopify-theme-deploy.yml
+```
+
+It uses:
+- Node.js 20
+- Shopify CLI (latest)
+- Safe deployment flags (`--allow-live`, `--ignore config/settings_data.json`)
+
 ## ✨ Features
 
 ### Homepage
