@@ -7,12 +7,18 @@
   <div class="vc-section-background"></div>
   <div class="vc-page-content">
     {% if page.title != blank %}
-      <h1 class="vc-page-title">{{ page.title }}</h1>
+      <h1 class="vc-page-title">
+        <span class="vc-page-title__text">{{ page.title }}</span>
+      </h1>
     {% endif %}
     
     {% if page.content != blank %}
       <div class="vc-page-body">
         {{ page.content }}
+      </div>
+    {% else %}
+      <div class="vc-page-body">
+        <p>This page is currently empty. Add content in Shopify Admin → Online Store → Pages.</p>
       </div>
     {% endif %}
   </div>

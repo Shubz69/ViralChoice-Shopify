@@ -1,0 +1,201 @@
+{% comment %}
+  ViralChoice Cart Section
+  Premium cart page with easy checkout
+{% endcomment %}
+
+<div class="vc-cart-section vc-reveal">
+  <div class="vc-section-background"></div>
+  <div class="vc-cart-content">
+    <h1 class="vc-cart-title">Your Cart</h1>
+    
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" id="cart" class="vc-cart-form">
+        <div class="vc-cart-items">
+          {% for item in cart.items %}
+            <div class="vc-cart-item" data-key="{{ item.key }}">
+              <div class="vc-cart-item__image">
+                {% if item.image %}
+                  <a href="{{ item.url }}">
+                    <img 
+                      src="{{ item.image | image_url: width: 200 }}"
+                      srcset="{{ item.image | image_url: width: 200 }} 1x, {{ item.image | image_url: width: 400 }} 2x"
+                      alt="{{ item.image.alt | escape }}"
+                      loading="lazy"
+                      width="200"
+                      height="{{ 200 | divided_by: item.image.aspect_ratio | ceil }}"
+                    >
+                  </a>
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              
+              <div class="vc-cart-item__details">
+                <h3 class="vc-cart-item__title">
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h3>
+                
+                {% unless item.product.has_only_default_variant %}
+                  <div class="vc-cart-item__variant">
+                    {{ item.variant.title }}
+                  </div>
+                {% endunless %}
+                
+                <div class="vc-cart-item__price">
+                  {{ item.final_price | money }}
+                  {% if item.original_price != item.final_price %}
+                    <span class="compare-at-price">{{ item.original_price | money }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              
+              <div class="vc-cart-item__quantity">
+                <label for="quantity-{{ item.key }}" class="visually-hidden">Quantity</label>
+                <div class="vc-quantity-selector">
+                  <button 
+                    type="button" 
+                    class="vc-quantity-btn vc-quantity-btn--minus"
+                    data-key="{{ item.key }}"
+                    aria-label="Decrease quantity"
+                  >−</button>
+                  <input 
+                    type="number" 
+                    id="quantity-{{ item.key }}"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    data-key="{{ item.key }}"
+                    class="vc-quantity-input"
+                  >
+                  <button 
+                    type="button" 
+                    class="vc-quantity-btn vc-quantity-btn--plus"
+                    data-key="{{ item.key }}"
+                    aria-label="Increase quantity"
+                  >+</button>
+                </div>
+              </div>
+              
+              <div class="vc-cart-item__total">
+                {{ item.final_line_price | money }}
+              </div>
+              
+              <div class="vc-cart-item__remove">
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="vc-remove-link" aria-label="Remove item">
+                  ×
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <div class="vc-cart-summary">
+          <div class="vc-cart-summary__inner">
+            <div class="vc-cart-subtotal">
+              <span class="vc-cart-subtotal__label">Subtotal</span>
+              <span class="vc-cart-subtotal__price">{{ cart.total_price | money }}</span>
+            </div>
+            
+            {% if cart.cart_level_discount_applications.size > 0 %}
+              <div class="vc-cart-discounts">
+                {% for discount in cart.cart_level_discount_applications %}
+                  <div class="vc-cart-discount">
+                    <span>{{ discount.title }}</span>
+                    <span>-{{ discount.total_allocated_amount | money }}</span>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            
+            <div class="vc-cart-total">
+              <span class="vc-cart-total__label">Total</span>
+              <span class="vc-cart-total__price">{{ cart.total_price | money }}</span>
+            </div>
+            
+            <div class="vc-cart-actions">
+              <button type="submit" name="update" class="vc-button vc-button--secondary" form="cart">
+                Update Cart
+              </button>
+              
+              <a href="{{ routes.checkout_url }}" class="vc-button vc-button--primary vc-button--large vc-button--neon vc-checkout-button">
+                <span class="vc-button__text">Checkout</span>
+                <span class="vc-button__glow"></span>
+              </a>
+            </div>
+            
+            {% render 'vc-trust-badges' %}
+            
+            <div class="vc-cart-continue">
+              <a href="{{ routes.all_products_collection_url }}" class="vc-continue-link">
+                ← Continue Shopping
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+    {% else %}
+      <div class="vc-cart-empty">
+        <div class="vc-cart-empty__icon">🛒</div>
+        <h2 class="vc-cart-empty__title">Your cart is empty</h2>
+        <p class="vc-cart-empty__text">Looks like you haven't added anything to your cart yet.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="vc-button vc-button--primary vc-button--large">
+          Start Shopping
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+    
+    const quantityButtons = document.querySelectorAll('.vc-quantity-btn');
+    const quantityInputs = document.querySelectorAll('.vc-quantity-input');
+    const cartForm = document.getElementById('cart');
+    
+    // Quantity button handlers
+    quantityButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const key = this.getAttribute('data-key');
+        const input = document.querySelector(`.vc-quantity-input[data-key="${key}"]`);
+        if (!input) return;
+        
+        let currentValue = parseInt(input.value) || 0;
+        
+        if (this.classList.contains('vc-quantity-btn--plus')) {
+          input.value = currentValue + 1;
+        } else if (this.classList.contains('vc-quantity-btn--minus')) {
+          if (currentValue > 0) {
+            input.value = currentValue - 1;
+          }
+        }
+        
+        // Trigger change event
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+    
+    // Auto-update cart on quantity change
+    quantityInputs.forEach(input => {
+      let timeout;
+      input.addEventListener('change', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          if (cartForm) {
+            cartForm.submit();
+          }
+        }, 500);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VC Main Cart",
+  "tag": "section",
+  "class": "section",
+  "settings": []
+}
+{% endschema %}
