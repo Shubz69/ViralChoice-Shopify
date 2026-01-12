@@ -24,13 +24,14 @@ jobs:
 
       - name: Deploy theme to Shopify
         env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
           SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
           SHOPIFY_FLAG_THEME_ID: ${{ secrets.SHOPIFY_FLAG_THEME_ID }}
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
         run: |
           shopify theme push \
             --store "$SHOPIFY_FLAG_STORE" \
             --theme "$SHOPIFY_FLAG_THEME_ID" \
+            --token "$SHOPIFY_CLI_THEME_TOKEN" \
             --json \
             --allow-live \
             --ignore config/settings_data.json
