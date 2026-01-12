@@ -517,7 +517,6 @@ a:focus-visible {
 .vc-trust-badge__icon {
   font-size: 3rem;
   margin-bottom: var(--vc-spacing-sm);
-  filter: drop-shadow(0 0 10px var(rgba(74, 144, 226, 0.2)));
   transition: var(--vc-transition);
   position: relative;
   display: inline-block;
@@ -530,7 +529,7 @@ a:focus-visible {
   left: 50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, var(rgba(139, 126, 200, 0.2)) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 126, 200, 0.1) 0%, transparent 70%);
   transform: translate(-50%, -50%) scale(0);
   border-radius: 50%;
   transition: transform var(--vc-transition);
@@ -539,7 +538,6 @@ a:focus-visible {
 
 .vc-trust-badge:hover .vc-trust-badge__icon {
   transform: scale(1.2) rotate(5deg);
-  filter: drop-shadow(0 0 20px var(rgba(74, 144, 226, 0.2)-strong)) drop-shadow(0 0 30px var(rgba(139, 126, 200, 0.2)));
 }
 
 .vc-trust-badge:hover .vc-trust-badge__icon::before {
@@ -778,7 +776,7 @@ a:focus-visible {
   height: 4px;
   background: linear-gradient(90deg, var(--vc-blue), var(--vc-purple));
   border-radius: 2px;
-  box-shadow: 0 0 10px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.1);
 }
 
 .vc-product-badge {
@@ -810,8 +808,8 @@ a:focus-visible {
 }
 
 @keyframes badgePulse {
-  0%, 100% { box-shadow: 0 0 10px var(rgba(74, 144, 226, 0.2)); }
-  50% { box-shadow: 0 0 20px var(rgba(74, 144, 226, 0.2)), 0 0 30px var(rgba(139, 126, 200, 0.2)); }
+  0%, 100% { box-shadow: 0 0 10px rgba(74, 144, 226, 0.1); }
+  50% { box-shadow: 0 0 20px rgba(74, 144, 226, 0.1), 0 0 30px rgba(139, 126, 200, 0.1); }
 }
 
 @keyframes badgeShine {
@@ -842,7 +840,7 @@ a:focus-visible {
   height: 60%;
   background: linear-gradient(180deg, var(--vc-blue), var(--vc-purple));
   border-radius: 2px;
-  box-shadow: 0 0 10px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.1);
 }
 
 .vc-product-price .compare-at-price {
@@ -873,7 +871,7 @@ a:focus-visible {
   height: 100%;
   background: linear-gradient(180deg, var(--vc-blue), var(--vc-purple));
   border-radius: var(--vc-radius) 0 0 var(--vc-radius);
-  box-shadow: 0 0 15px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.1);
 }
 
 .vc-product-form {
@@ -911,7 +909,7 @@ a:focus-visible {
 .vc-form-input:focus {
   outline: none;
   border-color: var(--vc-blue);
-  box-shadow: 0 0 0 4px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
   background: var(--vc-bg-lighter);
 }
 
@@ -1146,7 +1144,7 @@ a:focus-visible {
   width: 30%;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--vc-blue), transparent);
-  box-shadow: 0 0 10px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.1);
 }
 
 .vc-why-section__title::before {
@@ -1202,7 +1200,7 @@ a:focus-visible {
 .vc-why-item__icon {
   font-size: 4rem;
   margin-bottom: var(--vc-spacing-md);
-  filter: drop-shadow(0 0 15px var(rgba(74, 144, 226, 0.2)));
+  filter: drop-shadow(0 0 15px rgba(74, 144, 226, 0.1));
   transition: var(--vc-transition);
 }
 
@@ -1272,7 +1270,7 @@ a:focus-visible {
   height: 3px;
   background: linear-gradient(90deg, var(--vc-blue), var(--vc-purple));
   border-radius: 2px;
-  box-shadow: 0 0 15px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.1);
 }
 
 .vc-featured-product-card {
@@ -1297,7 +1295,7 @@ a:focus-visible {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, var(rgba(74, 144, 226, 0.2)) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.1) 0%, transparent 70%);
   opacity: 0;
   transition: opacity var(--vc-transition);
 }
@@ -1706,7 +1704,7 @@ a:focus-visible {
   height: 4px;
   background: linear-gradient(90deg, var(--vc-blue), var(--vc-purple));
   border-radius: 2px;
-  box-shadow: 0 0 15px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.1);
 }
 
 .vc-page-body {
@@ -1731,7 +1729,7 @@ a:focus-visible {
   height: 100%;
   background: linear-gradient(180deg, var(--vc-blue), var(--vc-purple));
   border-radius: var(--vc-radius-lg) 0 0 var(--vc-radius-lg);
-  box-shadow: 0 0 15px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.1);
 }
 
 .vc-page-body h2,
@@ -1962,7 +1960,7 @@ a:focus-visible {
   height: 4px;
   background: linear-gradient(90deg, var(--vc-blue), var(--vc-purple));
   border-radius: 2px;
-  box-shadow: 0 0 15px var(rgba(74, 144, 226, 0.2));
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.1);
 }
 
 .vc-cart-form {
@@ -2283,7 +2281,7 @@ a:focus-visible {
 .vc-cart-empty__icon {
   font-size: 5rem;
   margin-bottom: var(--vc-spacing-md);
-  filter: drop-shadow(0 0 20px var(rgba(74, 144, 226, 0.2)));
+  filter: drop-shadow(0 0 20px rgba(74, 144, 226, 0.1));
 }
 
 .vc-cart-empty__title {
