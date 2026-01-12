@@ -1206,7 +1206,6 @@ a:focus-visible {
 
 .vc-why-item:hover .vc-why-item__icon {
   transform: scale(1.15) rotate(5deg);
-  filter: drop-shadow(0 0 25px var(rgba(74, 144, 226, 0.2)-strong));
 }
 
 .vc-why-item__title {
