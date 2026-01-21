@@ -1,9 +1,5 @@
 {
   "sections": {
-    "vc-header": {
-      "type": "header",
-      "settings": {}
-    },
     "viral-hero": {
       "type": "viral-hero",
       "settings": {
@@ -70,13 +66,11 @@
     }
   },
   "order": [
-    "vc-header",
     "viral-hero",
-    "trending-carousel",
     "benefits-icons",
-    "testimonials",
-    "faq-accordion",
     "featured-collection",
-    "footer"
+    "trending-carousel",
+    "testimonials",
+    "faq-accordion"
   ]
 }

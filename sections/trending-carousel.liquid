@@ -8,15 +8,16 @@
   
   {% if collection.products.size > 0 %}
     <section class="trending-section">
-      <div class="trending-section__header reveal">
-        {% if section.settings.title != blank %}
-          <h2 class="trending-section__title">{{ section.settings.title }}</h2>
-        {% else %}
-          <h2 class="trending-section__title">Trending Now</h2>
-        {% endif %}
-      </div>
-      
-      <div class="trending-carousel">
+      <div class="container">
+        <div class="trending-section__header reveal">
+          {% if section.settings.title != blank %}
+            <h2 class="trending-section__title">{{ section.settings.title }}</h2>
+          {% else %}
+            <h2 class="trending-section__title">Trending Now</h2>
+          {% endif %}
+        </div>
+        
+        <div class="trending-carousel">
         <div class="trending-carousel__track">
           {% for product in collection.products limit: 10 %}
             <div class="trending-carousel__item">
@@ -44,6 +45,7 @@
             </div>
           {% endfor %}
         </div>
+      </div>
       </div>
     </section>
   {% endif %}

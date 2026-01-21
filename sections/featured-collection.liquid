@@ -8,15 +8,16 @@
   
   {% if collection.products.size > 0 %}
     <section class="featured-collection">
-      <div class="featured-collection__header reveal">
-        {% if section.settings.title != blank %}
-          <h2 class="featured-collection__title">{{ section.settings.title }}</h2>
-        {% else %}
-          <h2 class="featured-collection__title">Featured Collection</h2>
-        {% endif %}
-      </div>
-      
-      <div class="featured-collection__grid">
+      <div class="container">
+        <div class="featured-collection__header reveal">
+          {% if section.settings.title != blank %}
+            <h2 class="featured-collection__title">{{ section.settings.title }}</h2>
+          {% else %}
+            <h2 class="featured-collection__title">Featured Collection</h2>
+          {% endif %}
+        </div>
+        
+        <div class="featured-collection__grid">
         {% for product in collection.products limit: section.settings.product_limit %}
           <div class="product-card reveal">
             <div class="product-card__image-wrapper">
@@ -67,6 +68,7 @@
             {% endif %}
           </div>
         {% endfor %}
+        </div>
       </div>
     </section>
   {% endif %}
