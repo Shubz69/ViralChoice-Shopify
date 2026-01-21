@@ -4,7 +4,7 @@
       "type": "vc-hero",
       "settings": {
         "headline": "Discover Viral Products That Actually Work",
-        "subheadline": "Join thousands of satisfied customers who found their next favorite product",
+        "subheadline": "The Most Trusted Source for Viral Products Loved by Everyone",
         "cta_text": "Shop Now",
         "cta_link": "/collections/all",
         "show_trust_line": true,
@@ -13,6 +13,10 @@
         "trust_item_3": "Fast support",
         "show_scroll_hint": true
       }
+    },
+    "vc-trust-badges": {
+      "type": "vc-trust-badges",
+      "settings": {}
     },
     "vc-benefits": {
       "type": "vc-benefits",
@@ -51,6 +55,10 @@
         }
       }
     },
+    "vc-social-proof": {
+      "type": "vc-social-proof",
+      "settings": {}
+    },
     "vc-trending-row": {
       "type": "vc-trending-row",
       "settings": {
@@ -66,6 +74,10 @@
         "collection": "",
         "product_limit": 8
       }
+    },
+    "vc-why-trust": {
+      "type": "vc-why-trust",
+      "settings": {}
     },
     "vc-testimonials": {
       "type": "vc-testimonials",
@@ -134,9 +146,12 @@
   },
   "order": [
     "vc-hero",
+    "vc-trust-badges",
     "vc-benefits",
+    "vc-social-proof",
     "vc-trending-row",
     "vc-collection-grid",
+    "vc-why-trust",
     "vc-testimonials",
     "vc-faq",
     "vc-cta"

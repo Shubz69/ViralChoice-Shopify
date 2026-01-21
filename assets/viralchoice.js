@@ -654,6 +654,71 @@
   }
 
   // ============================================
+  // ANIMATED COUNTERS
+  // ============================================
+
+  function initAnimatedCounters() {
+    if (prefersReducedMotion) return;
+
+    const counters = document.querySelectorAll('.vc-trust-badge-card__number[data-count]');
+    if (counters.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = parseInt(counter.dataset.count);
+          const duration = 2000;
+          const increment = target / (duration / 16);
+          let current = 0;
+
+          const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+              counter.textContent = Math.floor(current).toLocaleString();
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.textContent = target.toLocaleString();
+            }
+          };
+
+          updateCounter();
+          observer.unobserve(counter);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  // ============================================
+  // ANIMATED ACTIVITY ITEMS
+  // ============================================
+
+  function initActivityAnimation() {
+    if (prefersReducedMotion) return;
+
+    const activityItems = document.querySelectorAll('.vc-activity-item');
+    if (activityItems.length === 0) return;
+
+    let currentIndex = 0;
+    const rotateActivity = () => {
+      activityItems.forEach((item, index) => {
+        if (index === currentIndex) {
+          item.style.opacity = '1';
+          item.style.transform = 'translateX(0)';
+        } else {
+          item.style.opacity = '0.5';
+          item.style.transform = 'translateX(-10px)';
+        }
+      });
+      currentIndex = (currentIndex + 1) % activityItems.length;
+    };
+
+    setInterval(rotateActivity, 3000);
+  }
+
+  // ============================================
   // INITIALIZE ALL FEATURES
   // ============================================
 
@@ -675,6 +740,8 @@
     initRippleEffect();
     initProductForm();
     initAddToCartForm();
+    initAnimatedCounters();
+    initActivityAnimation();
   }
 
   init();
