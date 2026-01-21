@@ -1,62 +1,179 @@
 {% comment %}
-  ViralChoice Collection Section
-  Enhanced collection page with visual effects
+  ViralChoice Premium Collection Page
+  Modern, responsive product grid with filters and sorting
 {% endcomment %}
 
-<div class="vc-collection-section vc-reveal">
-  <div class="vc-section-background"></div>
-  <div class="vc-collection-content">
-    {% if collection.title != blank %}
-      <h1 class="vc-collection-title">{{ collection.title }}</h1>
-      {% if collection.description != blank %}
-        <div class="vc-collection-description">{{ collection.description }}</div>
+<div class="vc-collection-page">
+  <div class="container">
+    {% comment %} Collection Header {% endcomment %}
+    <div class="vc-collection-page__header reveal">
+      {% if collection.title != blank %}
+        <h1 class="vc-collection-page__title">{{ collection.title }}</h1>
+      {% else %}
+        <h1 class="vc-collection-page__title">All Products</h1>
       {% endif %}
+      
+      {% if collection.description != blank %}
+        <div class="vc-collection-page__description">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+      
+      {% if collection.products.size > 0 %}
+        <div class="vc-collection-page__meta">
+          <span class="vc-collection-page__count">
+            {{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+    
+    {% comment %} Filters & Sort Bar {% endcomment %}
+    {% if collection.products.size > 0 %}
+      <div class="vc-collection-page__toolbar reveal">
+        <div class="vc-collection-page__filters">
+          <button class="vc-filter-toggle" aria-label="Toggle filters">
+            <span>Filters</span>
+            <span class="vc-filter-toggle__icon">☰</span>
+          </button>
+        </div>
+        
+        <div class="vc-collection-page__sort">
+          <label for="sort-by" class="vc-sort-label">Sort by:</label>
+          <select id="sort-by" class="vc-sort-select" onchange="if(this.value) window.location.href=this.value">
+            <option value="{{ collection.url }}?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+            <option value="{{ collection.url }}?sort_by=title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>Name A-Z</option>
+            <option value="{{ collection.url }}?sort_by=title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Name Z-A</option>
+            <option value="{{ collection.url }}?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+            <option value="{{ collection.url }}?sort_by=price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+            <option value="{{ collection.url }}?sort_by=created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+          </select>
+        </div>
+      </div>
     {% endif %}
     
+    {% comment %} Product Grid {% endcomment %}
     {% if collection.products.size > 0 %}
-      <div class="vc-collection-grid">
-        {% for product in collection.products %}
-          <div class="vc-collection-item vc-reveal">
-            <a href="{{ product.url }}" class="vc-collection-item__link">
-              {% if product.featured_image %}
-                <div class="vc-collection-item__image">
-                  <img 
-                    src="{{ product.featured_image | image_url: width: 600 }}"
-                    srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
-                            {{ product.featured_image | image_url: width: 600 }} 600w,
-                            {{ product.featured_image | image_url: width: 900 }} 900w"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 300px"
-                    alt="{{ product.featured_image.alt | escape }}"
-                    loading="lazy"
-                    width="600"
-                    height="{{ 600 | divided_by: product.featured_image.aspect_ratio | ceil }}"
-                  >
-                </div>
-              {% endif %}
-              
-              <h3 class="vc-collection-item__title">{{ product.title }}</h3>
-              
-              <div class="vc-collection-item__price">
-                {{ product.price | money }}
-                {% if product.compare_at_price > product.price %}
-                  <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
-                {% endif %}
+      <div class="vc-collection-page__grid">
+        {% paginate collection.products by 24 %}
+          {% for product in collection.products %}
+            <div class="vc-product-card reveal">
+              <div class="vc-product-card__image-wrapper">
+                <a href="{{ product.url }}">
+                  {% if product.compare_at_price > product.price %}
+                    <div class="vc-product-card__badge">Sale</div>
+                  {% endif %}
+                  
+                  {% if product.featured_image %}
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 600 }}"
+                      srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                              {{ product.featured_image | image_url: width: 600 }} 600w,
+                              {{ product.featured_image | image_url: width: 900 }} 900w"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="vc-product-card__image"
+                      loading="lazy"
+                      width="600"
+                      height="{{ 600 | divided_by: product.featured_image.aspect_ratio | ceil }}"
+                    >
+                  {% else %}
+                    <div class="vc-product-card__image vc-product-card__placeholder">
+                      <span>No Image</span>
+                    </div>
+                  {% endif %}
+                </a>
               </div>
-            </a>
-          </div>
-        {% endfor %}
+              
+              <div class="vc-product-card__content">
+                <a href="{{ product.url }}">
+                  <h3 class="vc-product-card__title">{{ product.title }}</h3>
+                  
+                  <div class="vc-product-card__price">
+                    <span class="vc-product-card__price-current">{{ product.price | money }}</span>
+                    {% if product.compare_at_price > product.price %}
+                      <span class="vc-product-card__price-compare">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                  </div>
+                </a>
+              </div>
+              
+              {% assign first_variant = product.selected_or_first_available_variant %}
+              {% if first_variant.available %}
+                <button 
+                  class="vc-product-card__quick-add"
+                  data-product-id="{{ product.id }}"
+                  data-variant-id="{{ first_variant.id }}"
+                  aria-label="Add {{ product.title }} to cart"
+                >
+                  Quick Add
+                </button>
+              {% else %}
+                <button class="vc-product-card__quick-add" disabled aria-label="{{ product.title }} is sold out">
+                  Sold Out
+                </button>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endpaginate %}
       </div>
+      
+      {% comment %} Pagination {% endcomment %}
+      {% if paginate.pages > 1 %}
+        <div class="vc-collection-page__pagination reveal">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" class="vc-pagination__link vc-pagination__link--prev" aria-label="Previous page">
+              ← Previous
+            </a>
+          {% endif %}
+          
+          <div class="vc-pagination__pages">
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}" class="vc-pagination__link">{{ part.title }}</a>
+              {% else %}
+                <span class="vc-pagination__current">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" class="vc-pagination__link vc-pagination__link--next" aria-label="Next page">
+              Next →
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
     {% else %}
-      <p class="vc-collection-empty">No products found in this collection.</p>
+      <div class="vc-collection-page__empty reveal">
+        <div class="vc-empty-state">
+          <div class="vc-empty-state__icon">📦</div>
+          <h2 class="vc-empty-state__title">No products found</h2>
+          <p class="vc-empty-state__text">This collection is currently empty.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="vc-empty-state__button">
+            Browse All Products
+          </a>
+        </div>
+      </div>
     {% endif %}
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "VC Collection",
+  "name": "VC Main Collection",
   "tag": "section",
   "class": "section",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 12,
+      "max": 48,
+      "step": 12,
+      "default": 24
+    }
+  ]
 }
 {% endschema %}
