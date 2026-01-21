@@ -1,0 +1,126 @@
+{% comment %}
+  ViralChoice Modern Hero Section
+  Animated gradient background with blob shapes, glow CTA, trust line, and down arrow
+{% endcomment %}
+
+<section class="viral-hero">
+  <div class="viral-hero__background"></div>
+  
+  <div class="viral-hero__blobs">
+    <div class="viral-hero__blob viral-hero__blob--1"></div>
+    <div class="viral-hero__blob viral-hero__blob--2"></div>
+    <div class="viral-hero__blob viral-hero__blob--3"></div>
+  </div>
+  
+  <div class="viral-hero__content reveal">
+    {% if section.settings.headline != blank %}
+      <h1 class="viral-hero__headline">{{ section.settings.headline }}</h1>
+    {% else %}
+      <h1 class="viral-hero__headline">Discover Viral Products That Actually Work</h1>
+    {% endif %}
+    
+    {% if section.settings.subheadline != blank %}
+      <p class="viral-hero__subheadline">{{ section.settings.subheadline }}</p>
+    {% else %}
+      <p class="viral-hero__subheadline">Join thousands of satisfied customers who found their next favorite product</p>
+    {% endif %}
+    
+    <div class="viral-hero__cta">
+      {% if section.settings.cta_link != blank %}
+        <a href="{{ section.settings.cta_link }}" class="viral-hero__cta-button">
+          {{ section.settings.cta_text | default: 'Shop Now' }}
+        </a>
+      {% else %}
+        <a href="{{ routes.all_products_collection_url }}" class="viral-hero__cta-button">
+          Shop Now
+        </a>
+      {% endif %}
+    </div>
+    
+    {% if section.settings.show_trust_line %}
+      <div class="viral-hero__trust-line">
+        {% if section.settings.trust_item_1 != blank %}
+          <div class="viral-hero__trust-item">{{ section.settings.trust_item_1 }}</div>
+        {% endif %}
+        {% if section.settings.trust_item_2 != blank %}
+          <div class="viral-hero__trust-item">{{ section.settings.trust_item_2 }}</div>
+        {% endif %}
+        {% if section.settings.trust_item_3 != blank %}
+          <div class="viral-hero__trust-item">{{ section.settings.trust_item_3 }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  
+  {% if section.settings.show_arrow %}
+    <div class="viral-hero__arrow">↓</div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Viral Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Discover Viral Products That Actually Work"
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Join thousands of satisfied customers who found their next favorite product"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_line",
+      "label": "Show Trust Line",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_item_1",
+      "label": "Trust Item 1",
+      "default": "Free returns"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_2",
+      "label": "Trust Item 2",
+      "default": "Secure checkout"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_3",
+      "label": "Trust Item 3",
+      "default": "Fast support"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show Down Arrow",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Viral Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -4,28 +4,65 @@
       "type": "header",
       "settings": {}
     },
-    "vc-hero": {
-      "type": "vc-hero",
+    "viral-hero": {
+      "type": "viral-hero",
       "settings": {
         "headline": "Discover Viral Products That Actually Work",
         "subheadline": "Join thousands of satisfied customers who found their next favorite product",
         "cta_text": "Shop Now",
-        "cta_link": "/collections/all"
+        "cta_link": "/collections/all",
+        "show_trust_line": true,
+        "trust_item_1": "Free returns",
+        "trust_item_2": "Secure checkout",
+        "trust_item_3": "Fast support",
+        "show_arrow": true
       }
     },
-    "vc-trust-strip": {
-      "type": "vc-trust-strip",
-      "settings": {}
-    },
-    "vc-featured-product": {
-      "type": "vc-featured-product",
+    "trending-carousel": {
+      "type": "trending-carousel",
       "settings": {
-        "title": "Featured Product"
+        "title": "Trending Now",
+        "collection": ""
       }
     },
-    "vc-why-section": {
-      "type": "vc-why-section",
-      "settings": {}
+    "benefits-icons": {
+      "type": "benefits-icons",
+      "settings": {
+        "benefit_1_title": "Fast Shipping",
+        "benefit_1_text": "Quick delivery to your door",
+        "benefit_2_title": "Tested Products",
+        "benefit_2_text": "Viral products verified by thousands",
+        "benefit_3_title": "Secure Checkout",
+        "benefit_3_text": "Your payment is 100% protected",
+        "show_benefit_4": true,
+        "benefit_4_title": "Fast Support",
+        "benefit_4_text": "We're here to help when you need us"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "testimonial_1_text": "Great product, fast shipping, exactly as described.",
+        "testimonial_1_author": "Customer",
+        "testimonial_2_text": "Really happy with my purchase. Would recommend.",
+        "testimonial_2_author": "Customer",
+        "testimonial_3_text": "Quality product and excellent customer service.",
+        "testimonial_3_author": "Customer"
+      }
+    },
+    "faq-accordion": {
+      "type": "faq-accordion",
+      "settings": {
+        "title": "Frequently Asked Questions"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured Collection",
+        "collection": "",
+        "product_limit": 8
+      }
     },
     "footer": {
       "type": "footer",
@@ -34,10 +71,12 @@
   },
   "order": [
     "vc-header",
-    "vc-hero",
-    "vc-trust-strip",
-    "vc-featured-product",
-    "vc-why-section",
+    "viral-hero",
+    "trending-carousel",
+    "benefits-icons",
+    "testimonials",
+    "faq-accordion",
+    "featured-collection",
     "footer"
   ]
 }

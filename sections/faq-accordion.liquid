@@ -1,0 +1,129 @@
+{% comment %}
+  FAQ Accordion Section
+  Expandable FAQ items
+{% endcomment %}
+
+<section class="faq-section">
+  <div class="faq-container reveal">
+    {% if section.settings.title != blank %}
+      <h2 style="text-align: center; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin-bottom: 3rem; letter-spacing: -0.02em;">
+        {{ section.settings.title }}
+      </h2>
+    {% endif %}
+    
+    <div class="faq-list">
+      {% if section.settings.faq_1_question != blank %}
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            {{ section.settings.faq_1_question }}
+          </button>
+          <div class="faq-answer">
+            {{ section.settings.faq_1_answer }}
+          </div>
+        </div>
+      {% endif %}
+      
+      {% if section.settings.faq_2_question != blank %}
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            {{ section.settings.faq_2_question }}
+          </button>
+          <div class="faq-answer">
+            {{ section.settings.faq_2_answer }}
+          </div>
+        </div>
+      {% endif %}
+      
+      {% if section.settings.faq_3_question != blank %}
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            {{ section.settings.faq_3_question }}
+          </button>
+          <div class="faq-answer">
+            {{ section.settings.faq_3_answer }}
+          </div>
+        </div>
+      {% endif %}
+      
+      {% if section.settings.faq_4_question != blank %}
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            {{ section.settings.faq_4_question }}
+          </button>
+          <div class="faq-answer">
+            {{ section.settings.faq_4_answer }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "faq_1_question",
+      "label": "FAQ 1 Question",
+      "default": "How long does shipping take?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_answer",
+      "label": "FAQ 1 Answer",
+      "default": "We offer fast shipping options. Standard shipping typically takes 5-7 business days. Express shipping is available at checkout for faster delivery."
+    },
+    {
+      "type": "text",
+      "id": "faq_2_question",
+      "label": "FAQ 2 Question",
+      "default": "What is your return policy?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_answer",
+      "label": "FAQ 2 Answer",
+      "default": "We offer a 30-day money-back guarantee. If you're not satisfied with your purchase, you can return it for a full refund. Items must be in original condition."
+    },
+    {
+      "type": "text",
+      "id": "faq_3_question",
+      "label": "FAQ 3 Question",
+      "default": "Is checkout secure?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_answer",
+      "label": "FAQ 3 Answer",
+      "default": "Yes, all payments are processed securely through Shopify's encrypted checkout system. We never store your payment information."
+    },
+    {
+      "type": "text",
+      "id": "faq_4_question",
+      "label": "FAQ 4 Question",
+      "default": "How can I contact support?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_4_answer",
+      "label": "FAQ 4 Answer",
+      "default": "You can reach our support team through the contact form on our website or by email. We typically respond within 24 hours."
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion"
+    }
+  ]
+}
+{% endschema %}

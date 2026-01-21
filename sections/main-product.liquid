@@ -135,35 +135,42 @@
         {% endform %}
       </product-form>
       
-      {% comment %} FAQ Accordion {% endcomment %}
-      <div class="vc-faq">
-        <h2 class="vc-faq__title">Frequently Asked Questions</h2>
-        
-        <div class="vc-faq-item">
-          <button class="vc-faq-question" type="button">
-            Shipping Information
-          </button>
-          <div class="vc-faq-answer">
-            <p>We offer fast and secure shipping to customers worldwide. Standard shipping typically takes 5-7 business days. Express shipping options are available at checkout for faster delivery.</p>
-          </div>
+      {% comment %} Trust Badges Under ATC {% endcomment %}
+      <div class="product-page__trust-badges">
+        <div class="product-page__trust-badge">Free returns</div>
+        <div class="product-page__trust-badge">Secure checkout</div>
+        <div class="product-page__trust-badge">Fast shipping</div>
+      </div>
+      
+      {% comment %} Collapsible Sections {% endcomment %}
+      <div class="product-page__collapsible">
+        <button class="product-page__collapsible-header">
+          Product Details
+        </button>
+        <div class="product-page__collapsible-content">
+          {% if product.description != blank %}
+            {{ product.description }}
+          {% else %}
+            <p>Product details coming soon.</p>
+          {% endif %}
         </div>
-        
-        <div class="vc-faq-item">
-          <button class="vc-faq-question" type="button">
-            Returns & Refunds
-          </button>
-          <div class="vc-faq-answer">
-            <p>We offer a 30-day money-back guarantee. If you're not completely satisfied with your purchase, you can return it for a full refund. Items must be in original condition and packaging.</p>
-          </div>
+      </div>
+      
+      <div class="product-page__collapsible">
+        <button class="product-page__collapsible-header">
+          Shipping Information
+        </button>
+        <div class="product-page__collapsible-content">
+          <p>We offer fast and secure shipping to customers worldwide. Standard shipping typically takes 5-7 business days. Express shipping options are available at checkout for faster delivery.</p>
         </div>
-        
-        <div class="vc-faq-item">
-          <button class="vc-faq-question" type="button">
-            Product Guarantee
-          </button>
-          <div class="vc-faq-answer">
-            <p>All our products are carefully selected and tested. We stand behind the quality of every item we sell. If you experience any issues, our customer support team is here to help.</p>
-          </div>
+      </div>
+      
+      <div class="product-page__collapsible">
+        <button class="product-page__collapsible-header">
+          Returns & Refunds
+        </button>
+        <div class="product-page__collapsible-content">
+          <p>We offer a 30-day money-back guarantee. If you're not completely satisfied with your purchase, you can return it for a full refund. Items must be in original condition and packaging.</p>
         </div>
       </div>
     </div>
@@ -171,14 +178,14 @@
 </div>
 
 {% comment %} Sticky Mobile Add to Cart {% endcomment %}
-<div class="vc-sticky-atc">
-  <div class="vc-sticky-atc__inner">
-    <div class="vc-sticky-atc__price">
+<div class="product-page__sticky-atc">
+  <div class="product-page__sticky-atc-inner">
+    <div class="product-page__sticky-price">
       {{ product.price | money }}
     </div>
     <button 
       type="button"
-      class="vc-button vc-button--primary vc-sticky-atc__button"
+      class="product-page__sticky-button"
       onclick="document.getElementById('product-submit-{{ section.id }}').click()"
     >
       {{ 'products.product.add_to_cart' | t }}

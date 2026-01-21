@@ -1,6 +1,6 @@
 {% comment %}
   ViralChoice Header Section
-  Minimal header with logo and navigation
+  Modern sticky header with blur and mobile menu
 {% endcomment %}
 
 <header class="vc-header">
@@ -8,6 +8,8 @@
     <a href="{{ routes.root_url }}" class="vc-logo">
       {{ section.settings.logo_text | default: 'ViralChoice' }}
     </a>
+    
+    <button class="vc-mobile-menu-toggle" aria-label="Toggle menu">☰</button>
     
     <nav class="vc-nav">
       {% for link in linklists[section.settings.menu].links %}
@@ -25,6 +27,20 @@
     </nav>
   </div>
 </header>
+
+<div class="vc-mobile-menu">
+  <button class="vc-mobile-menu__close" aria-label="Close menu">×</button>
+  <nav class="vc-mobile-menu__nav">
+    {% for link in linklists[section.settings.menu].links %}
+      <a href="{{ link.url }}" class="vc-mobile-menu__link">
+        {{ link.title }}
+      </a>
+    {% endfor %}
+    <a href="{{ routes.cart_url }}" class="vc-mobile-menu__link">
+      Cart {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
+    </a>
+  </nav>
+</div>
 
 {% schema %}
 {

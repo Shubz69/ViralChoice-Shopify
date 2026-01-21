@@ -1,138 +1,293 @@
 /* ============================================
-   VIRALCHOICE PREMIUM INTERACTIVE JAVASCRIPT
-   Modern, interactive features - Red & Black theme
+   VIRALCHOICE MODERN INTERACTIVE JS
    ============================================ */
 
 (function() {
   'use strict';
-
-  // Check for reduced motion preference
+  
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+  
   // ============================================
-  // FAQ ACCORDION - ENHANCED
+  // HEADER BLUR ON SCROLL
   // ============================================
   
-  function initFAQ() {
-    const faqItems = document.querySelectorAll('.vc-faq-item');
-    if (faqItems.length === 0) return;
+  function initHeaderBlur() {
+    const header = document.querySelector('.vc-header');
+    if (!header) return;
     
-    faqItems.forEach((item, index) => {
-      const question = item.querySelector('.vc-faq-question');
-      if (!question) return;
+    let lastScroll = 0;
+    let ticking = false;
+    
+    function updateHeader() {
+      const scrollY = window.scrollY;
       
-      // Add stagger animation delay
-      if (!prefersReducedMotion) {
-        item.style.transitionDelay = `${index * 0.05}s`;
+      if (scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
       }
       
-      question.addEventListener('click', () => {
-        const isOpen = item.classList.contains('is-open');
-        
-        // Close all other items with animation
-        faqItems.forEach(otherItem => {
-          if (otherItem !== item && otherItem.classList.contains('is-open')) {
-            otherItem.classList.remove('is-open');
-          }
-        });
-        
-        // Toggle current item
-        setTimeout(() => {
-          item.classList.toggle('is-open', !isOpen);
-        }, isOpen ? 0 : 100);
+      lastScroll = scrollY;
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+  
+  // ============================================
+  // MOBILE MENU
+  // ============================================
+  
+  function initMobileMenu() {
+    const toggle = document.querySelector('.vc-mobile-menu-toggle');
+    const menu = document.querySelector('.vc-mobile-menu');
+    const close = document.querySelector('.vc-mobile-menu__close');
+    
+    if (!toggle || !menu) return;
+    
+    toggle.addEventListener('click', () => {
+      menu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    if (close) {
+      close.addEventListener('click', () => {
+        menu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+    
+    // Close on link click
+    const menuLinks = menu.querySelectorAll('.vc-mobile-menu__link');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+        document.body.style.overflow = '';
       });
     });
   }
-
+  
   // ============================================
-  // STICKY MOBILE ADD TO CART - ENHANCED
+  // TRENDING CAROUSEL AUTO-SCROLL
+  // ============================================
+  
+  function initTrendingCarousel() {
+    const carousel = document.querySelector('.trending-carousel');
+    if (!carousel) return;
+    
+    const track = carousel.querySelector('.trending-carousel__track');
+    if (!track) return;
+    
+    // Duplicate items for seamless loop
+    const items = track.querySelectorAll('.trending-carousel__item');
+    if (items.length === 0) return;
+    
+    items.forEach(item => {
+      const clone = item.cloneNode(true);
+      track.appendChild(clone);
+    });
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => {
+      if (!prefersReducedMotion) {
+        track.style.animationPlayState = 'paused';
+      }
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+      if (!prefersReducedMotion) {
+        track.style.animationPlayState = 'running';
+      }
+    });
+  }
+  
+  // ============================================
+  // FAQ ACCORDION
+  // ============================================
+  
+  function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length === 0) return;
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      if (!question) return;
+      
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all items
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  }
+  
+  // ============================================
+  // PRODUCT PAGE COLLAPSIBLES
+  // ============================================
+  
+  function initProductCollapsibles() {
+    const collapsibles = document.querySelectorAll('.product-page__collapsible');
+    if (collapsibles.length === 0) return;
+    
+    collapsibles.forEach(item => {
+      const header = item.querySelector('.product-page__collapsible-header');
+      if (!header) return;
+      
+      header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all
+        collapsibles.forEach(otherItem => {
+          otherItem.classList.remove('active');
+        });
+        
+        // Open clicked if wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  }
+  
+  // ============================================
+  // STICKY MOBILE ATC
   // ============================================
   
   function initStickyATC() {
-    const stickyATC = document.querySelector('.vc-sticky-atc');
+    const stickyATC = document.querySelector('.product-page__sticky-atc');
     if (!stickyATC) return;
     
-    const mainATCButton = document.querySelector('.vc-add-to-cart-button');
-    if (!mainATCButton) return;
+    const mainATC = document.querySelector('[name="add"]');
+    if (!mainATC) return;
     
-    let isVisible = false;
     let ticking = false;
     
     function checkScroll() {
       if (window.innerWidth > 768) {
-        if (isVisible) {
-          stickyATC.classList.remove('is-visible');
-          isVisible = false;
-        }
+        stickyATC.classList.remove('visible');
         return;
       }
       
-      const mainButtonRect = mainATCButton.getBoundingClientRect();
-      const shouldShow = mainButtonRect.bottom < 0;
+      const mainATCRect = mainATC.getBoundingClientRect();
+      const shouldShow = mainATCRect.bottom < 0;
       
-      if (shouldShow !== isVisible) {
-        isVisible = shouldShow;
-        stickyATC.classList.toggle('is-visible', shouldShow);
+      if (shouldShow) {
+        stickyATC.classList.add('visible');
+      } else {
+        stickyATC.classList.remove('visible');
       }
+      
+      ticking = false;
     }
     
-    // Throttled scroll handler
     window.addEventListener('scroll', () => {
       if (!ticking) {
-        window.requestAnimationFrame(() => {
-          checkScroll();
-          ticking = false;
-        });
+        window.requestAnimationFrame(checkScroll);
         ticking = true;
       }
     }, { passive: true });
     
-    // Handle click on sticky button
-    const stickyButton = stickyATC.querySelector('.vc-sticky-atc__button');
+    // Handle sticky button click
+    const stickyButton = stickyATC.querySelector('.product-page__sticky-button');
     if (stickyButton) {
-      stickyButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        mainATCButton.click();
-        // Add pulse effect
-        stickyButton.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          stickyButton.style.transform = '';
-        }, 150);
+      stickyButton.addEventListener('click', () => {
+        mainATC.click();
       });
     }
-    
-    window.addEventListener('resize', checkScroll, { passive: true });
   }
-
+  
   // ============================================
-  // SCROLL REVEAL ANIMATION - ENHANCED
+  // QUICK ADD TO CART
+  // ============================================
+  
+  function initQuickAdd() {
+    const quickAddButtons = document.querySelectorAll('.product-card__quick-add');
+    if (quickAddButtons.length === 0) return;
+    
+    quickAddButtons.forEach(button => {
+      button.addEventListener('click', async function(e) {
+        e.preventDefault();
+        const productId = this.dataset.productId;
+        const variantId = this.dataset.variantId;
+        
+        if (!productId || !variantId) return;
+        
+        // Disable button
+        this.disabled = true;
+        this.textContent = 'Adding...';
+        
+        try {
+          const response = await fetch(window.routes.cart_add_url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              items: [{
+                id: variantId,
+                quantity: 1
+              }]
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            this.textContent = 'Added!';
+            // Update cart count if element exists
+            const cartCount = document.querySelector('.vc-cart-count');
+            if (cartCount) {
+              const currentCount = parseInt(cartCount.textContent) || 0;
+              cartCount.textContent = currentCount + 1;
+            }
+            
+            // Reset button after delay
+            setTimeout(() => {
+              this.disabled = false;
+              this.textContent = 'Quick Add';
+            }, 2000);
+          } else {
+            throw new Error(data.message || 'Failed to add to cart');
+          }
+        } catch (error) {
+          console.error('Quick add error:', error);
+          this.textContent = 'Error';
+          this.disabled = false;
+          setTimeout(() => {
+            this.textContent = 'Quick Add';
+          }, 2000);
+        }
+      });
+    });
+  }
+  
+  // ============================================
+  // SCROLL REVEAL ANIMATIONS
   // ============================================
   
   function initScrollReveal() {
-    const revealElements = document.querySelectorAll('.vc-reveal');
-    if (revealElements.length === 0) return;
+    if (prefersReducedMotion) return;
     
-    // Make all elements visible immediately if reduced motion or if JS hasn't loaded
-    if (prefersReducedMotion) {
-      revealElements.forEach(el => el.classList.add('is-visible'));
-      return;
-    }
-    
-    // Show elements that are already in viewport immediately
-    revealElements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add('is-visible');
-      }
-    });
+    const reveals = document.querySelectorAll('.reveal');
+    if (reveals.length === 0) return;
     
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Stagger animation
-          setTimeout(() => {
-            entry.target.classList.add('is-visible');
-          }, index * 50);
+          entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
       });
@@ -141,154 +296,20 @@
       rootMargin: '0px 0px -50px 0px'
     });
     
-    revealElements.forEach(el => {
-      if (!el.classList.contains('is-visible')) {
-        observer.observe(el);
-      }
+    reveals.forEach(reveal => {
+      observer.observe(reveal);
     });
   }
-
-  // ============================================
-  // PRODUCT IMAGE ZOOM & THUMBNAILS - ENHANCED
-  // ============================================
   
-  function initProductImages() {
-    if (prefersReducedMotion) return;
-    
-    const productImages = document.querySelectorAll('.vc-product-image');
-    const thumbnails = document.querySelectorAll('.vc-product-thumbnail');
-    
-    // Main image hover zoom (desktop only)
-    if (window.innerWidth > 768) {
-      productImages.forEach(image => {
-        const img = image.querySelector('img');
-        if (!img) return;
-        
-        image.addEventListener('mouseenter', () => {
-          img.style.transform = 'scale(1.1)';
-          image.style.borderColor = 'var(--vc-red)';
-          image.style.boxShadow = 'var(--vc-shadow-red)';
-        }, { passive: true });
-        
-        image.addEventListener('mouseleave', () => {
-          img.style.transform = 'scale(1)';
-          image.style.borderColor = '';
-          image.style.boxShadow = '';
-        }, { passive: true });
-      });
-    }
-    
-    // Thumbnail interactions
-    thumbnails.forEach(thumb => {
-      thumb.addEventListener('click', function() {
-        // Remove active class from all
-        thumbnails.forEach(t => t.classList.remove('active'));
-        // Add active class to clicked
-        this.classList.add('active');
-        
-        // Get image source and update main image
-        const imageSrc = this.getAttribute('data-image-src');
-        const mainImage = document.querySelector('.vc-product-image img');
-        if (imageSrc && mainImage) {
-          // Fade out
-          mainImage.style.opacity = '0';
-          setTimeout(() => {
-            mainImage.src = imageSrc;
-            // Fade in
-            setTimeout(() => {
-              mainImage.style.opacity = '1';
-            }, 50);
-          }, 200);
-        }
-      });
-      
-      // Hover effect
-      thumb.addEventListener('mouseenter', function() {
-        if (!prefersReducedMotion) {
-          this.style.transform = 'translateY(-4px) scale(1.05)';
-        }
-      }, { passive: true });
-      
-      thumb.addEventListener('mouseleave', function() {
-        if (!this.classList.contains('active')) {
-          this.style.transform = '';
-        }
-      }, { passive: true });
-    });
-    
-    // Set first thumbnail as active
-    if (thumbnails.length > 0) {
-      thumbnails[0].classList.add('active');
-    }
-  }
-
   // ============================================
-  // BUTTON INTERACTIONS - ENHANCED
-  // ============================================
-  
-  function initButtonEffects() {
-    const buttons = document.querySelectorAll('.vc-button');
-    
-    buttons.forEach(button => {
-      // Ripple effect on click
-      button.addEventListener('click', function(e) {
-        if (prefersReducedMotion) return;
-        
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.style.position = 'absolute';
-        ripple.style.borderRadius = '50%';
-        ripple.style.background = 'rgba(255, 255, 255, 0.3)';
-        ripple.style.transform = 'scale(0)';
-        ripple.style.animation = 'ripple 0.6s ease-out';
-        ripple.style.pointerEvents = 'none';
-        
-        this.style.position = 'relative';
-        this.style.overflow = 'hidden';
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
-      });
-    });
-  }
-
-  // ============================================
-  // TRUST BADGE INTERACTIONS
-  // ============================================
-  
-  function initTrustBadges() {
-    const badges = document.querySelectorAll('.vc-trust-badge');
-    
-    badges.forEach((badge, index) => {
-      // Stagger entrance
-      if (!prefersReducedMotion) {
-        badge.style.opacity = '0';
-        badge.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          badge.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-          badge.style.opacity = '1';
-          badge.style.transform = 'translateY(0)';
-        }, index * 100);
-      }
-    });
-  }
-
-  // ============================================
-  // PARALLAX EFFECT (Subtle)
+  // PARALLAX HERO (SUBTLE)
   // ============================================
   
   function initParallax() {
     if (prefersReducedMotion) return;
-    if (window.innerWidth <= 768) return; // Mobile: no parallax
+    if (window.innerWidth <= 768) return; // No parallax on mobile
     
-    const hero = document.querySelector('.vc-hero');
+    const hero = document.querySelector('.viral-hero__background');
     if (!hero) return;
     
     let ticking = false;
@@ -298,90 +319,16 @@
         window.requestAnimationFrame(() => {
           const scrolled = window.pageYOffset;
           const rate = scrolled * 0.3;
-          
-          if (hero) {
-            hero.style.transform = `translateY(${rate}px)`;
-          }
-          
+          hero.style.transform = `translateY(${rate}px)`;
           ticking = false;
         });
         ticking = true;
       }
     }, { passive: true });
   }
-
-  // ============================================
-  // HEADER SCROLL EFFECT
-  // ============================================
   
-  function initHeaderScroll() {
-    const header = document.querySelector('.vc-header');
-    if (!header) return;
-    
-    let lastScroll = 0;
-    let ticking = false;
-    
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScroll = window.pageYOffset;
-          
-          if (currentScroll > 100) {
-            header.style.background = 'rgba(11, 11, 11, 0.98)';
-            header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.8)';
-          } else {
-            header.style.background = 'rgba(11, 11, 11, 0.95)';
-            header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
-          }
-          
-          lastScroll = currentScroll;
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-  }
-
   // ============================================
-  // PARTICLE SYSTEM - REMOVED (Professional Design)
-  // ============================================
-  
-  function initParticles() {
-    // Removed for professional design
-    return;
-  }
-
-  // ============================================
-  // CURSOR TRAIL EFFECT - REMOVED (Professional Design)
-  // ============================================
-  
-  function initCursorTrail() {
-    // Removed for professional design
-    return;
-  }
-
-  // ============================================
-  // ADD RIPPLE ANIMATION CSS
-  // ============================================
-  
-  function addRippleAnimation() {
-    if (document.getElementById('vc-ripple-style')) return;
-    
-    const style = document.createElement('style');
-    style.id = 'vc-ripple-style';
-    style.textContent = `
-      @keyframes ripple {
-        to {
-          transform: scale(4);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // ============================================
-  // INITIALIZE ALL FEATURES
+  // INITIALIZE ALL
   // ============================================
   
   function init() {
@@ -390,98 +337,21 @@
       return;
     }
     
-    addRippleAnimation();
+    initHeaderBlur();
+    initMobileMenu();
+    initTrendingCarousel();
     initFAQ();
+    initProductCollapsibles();
     initStickyATC();
+    initQuickAdd();
     initScrollReveal();
-    initProductImages();
-    initButtonEffects();
-    initTrustBadges();
     initParallax();
-    initHeaderScroll();
-    initModernInteractions();
-    // Particle and cursor trail effects removed for professional design
   }
   
-  // ============================================
-  // MODERN INTERACTIVE FEATURES
-  // ============================================
-  
-  function initModernInteractions() {
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href === '#') return;
-        
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-    
-    // Add loading states to submit buttons
-    const submitButtons = document.querySelectorAll('.vc-button[type="submit"]');
-    submitButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const originalText = this.textContent;
-        this.style.opacity = '0.7';
-        this.style.pointerEvents = 'none';
-        
-        setTimeout(() => {
-          this.style.opacity = '';
-          this.style.pointerEvents = '';
-        }, 2000);
-      });
-    });
-    
-    // Enhanced card interactions with ripple for cards
-    const cards = document.querySelectorAll('.vc-trust-badge, .vc-why-item, .vc-featured-product-card, .vc-collection-item');
-    cards.forEach(card => {
-      card.addEventListener('click', function(e) {
-        if (prefersReducedMotion) return;
-        if (this.querySelector('a')) return; // Don't add ripple if card has a link
-        
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.cssText = `
-          position: absolute;
-          width: ${size}px;
-          height: ${size}px;
-          left: ${x}px;
-          top: ${y}px;
-          background: rgba(74, 144, 226, 0.3);
-          border-radius: 50%;
-          transform: scale(0);
-          animation: ripple 0.6s ease-out;
-          pointer-events: none;
-          z-index: 0;
-        `;
-        
-        if (!this.style.position || this.style.position === 'static') {
-          this.style.position = 'relative';
-        }
-        this.style.overflow = 'hidden';
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
-      });
-    });
-  }
-  
-  // Start initialization
+  // Start
   init();
   
-  // Re-initialize on dynamic content load
+  // Re-init on section load (Shopify theme editor)
   if (typeof document.addEventListener !== 'undefined') {
     document.addEventListener('shopify:section:load', init);
   }

@@ -1,0 +1,119 @@
+{% comment %}
+  Benefits Icons Section
+  Why ViralChoice - 3-4 icon cards
+{% endcomment %}
+
+<section class="benefits-section">
+  <div class="benefits-grid reveal">
+    <div class="benefit-card">
+      <span class="benefit-card__icon">🚀</span>
+      <h3 class="benefit-card__title">
+        {{ section.settings.benefit_1_title | default: 'Fast Shipping' }}
+      </h3>
+      <p class="benefit-card__text">
+        {{ section.settings.benefit_1_text | default: 'Quick delivery to your door' }}
+      </p>
+    </div>
+    
+    <div class="benefit-card">
+      <span class="benefit-card__icon">✅</span>
+      <h3 class="benefit-card__title">
+        {{ section.settings.benefit_2_title | default: 'Tested Products' }}
+      </h3>
+      <p class="benefit-card__text">
+        {{ section.settings.benefit_2_text | default: 'Viral products verified by thousands' }}
+      </p>
+    </div>
+    
+    <div class="benefit-card">
+      <span class="benefit-card__icon">🔒</span>
+      <h3 class="benefit-card__title">
+        {{ section.settings.benefit_3_title | default: 'Secure Checkout' }}
+      </h3>
+      <p class="benefit-card__text">
+        {{ section.settings.benefit_3_text | default: 'Your payment is 100% protected' }}
+      </p>
+    </div>
+    
+    {% if section.settings.show_benefit_4 %}
+      <div class="benefit-card">
+        <span class="benefit-card__icon">💬</span>
+        <h3 class="benefit-card__title">
+          {{ section.settings.benefit_4_title | default: 'Fast Support' }}
+        </h3>
+        <p class="benefit-card__text">
+          {{ section.settings.benefit_4_text | default: 'We're here to help when you need us' }}
+        </p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits Icons",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "benefit_1_title",
+      "label": "Benefit 1 Title",
+      "default": "Fast Shipping"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1_text",
+      "label": "Benefit 1 Text",
+      "default": "Quick delivery to your door"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2_title",
+      "label": "Benefit 2 Title",
+      "default": "Tested Products"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2_text",
+      "label": "Benefit 2 Text",
+      "default": "Viral products verified by thousands"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3_title",
+      "label": "Benefit 3 Title",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3_text",
+      "label": "Benefit 3 Text",
+      "default": "Your payment is 100% protected"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_benefit_4",
+      "label": "Show Fourth Benefit",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "benefit_4_title",
+      "label": "Benefit 4 Title",
+      "default": "Fast Support"
+    },
+    {
+      "type": "text",
+      "id": "benefit_4_text",
+      "label": "Benefit 4 Text",
+      "default": "We're here to help when you need us"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits Icons"
+    }
+  ]
+}
+{% endschema %}
