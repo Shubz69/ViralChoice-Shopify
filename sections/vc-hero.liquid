@@ -1,42 +1,57 @@
 {% comment %}
-  ViralChoice Hero Section - Professional Design
-  Clean hero section with headline, subheadline, and CTA button
+  ViralChoice Premium Hero Section
 {% endcomment %}
 
-<section class="vc-hero vc-reveal">
+<section class="vc-hero">
   <div class="vc-hero__inner">
     {% if section.settings.headline != blank %}
-      <h1 class="vc-hero__headline">
-        <span class="vc-hero__headline-text">{{ section.settings.headline }}</span>
-      </h1>
+      <h1 class="vc-hero__headline reveal">{{ section.settings.headline }}</h1>
     {% else %}
-      <h1 class="vc-hero__headline">
-        <span class="vc-hero__headline-text">Discover Viral Products That Actually Work</span>
-      </h1>
+      <h1 class="vc-hero__headline reveal">Discover Viral Products That Actually Work</h1>
     {% endif %}
     
     {% if section.settings.subheadline != blank %}
-      <p class="vc-hero__subheadline">{{ section.settings.subheadline }}</p>
+      <p class="vc-hero__subheadline reveal">{{ section.settings.subheadline }}</p>
     {% else %}
-      <p class="vc-hero__subheadline">Join thousands of satisfied customers who found their next favorite product</p>
+      <p class="vc-hero__subheadline reveal">Join thousands of satisfied customers who found their next favorite product</p>
     {% endif %}
     
-    {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-      <div class="vc-hero__cta">
-        <a href="{{ section.settings.cta_link }}" class="vc-button vc-button--primary vc-button--large vc-button--animated">
-          {{ section.settings.cta_text }}
-          <span class="vc-button__arrow">→</span>
+    <div class="vc-hero__cta-group reveal">
+      {% if section.settings.cta_link != blank %}
+        <a href="{{ section.settings.cta_link }}" class="vc-hero__cta-primary">
+          {{ section.settings.cta_text | default: 'Shop Now' }}
         </a>
-      </div>
-    {% else %}
-      <div class="vc-hero__cta">
-        <a href="{{ routes.all_products_collection_url }}" class="vc-button vc-button--primary vc-button--large vc-button--animated">
+      {% else %}
+        <a href="{{ routes.all_products_collection_url }}" class="vc-hero__cta-primary">
           Shop Now
-          <span class="vc-button__arrow">→</span>
         </a>
+      {% endif %}
+      
+      {% if section.settings.secondary_link != blank %}
+        <a href="{{ section.settings.secondary_link }}" class="vc-hero__cta-secondary">
+          {{ section.settings.secondary_text | default: 'Learn More' }}
+        </a>
+      {% endif %}
+    </div>
+    
+    {% if section.settings.show_trust_line %}
+      <div class="vc-hero__trust-line reveal">
+        {% if section.settings.trust_item_1 != blank %}
+          <div class="vc-hero__trust-item">{{ section.settings.trust_item_1 }}</div>
+        {% endif %}
+        {% if section.settings.trust_item_2 != blank %}
+          <div class="vc-hero__trust-item">{{ section.settings.trust_item_2 }}</div>
+        {% endif %}
+        {% if section.settings.trust_item_3 != blank %}
+          <div class="vc-hero__trust-item">{{ section.settings.trust_item_3 }}</div>
+        {% endif %}
       </div>
     {% endif %}
   </div>
+  
+  {% if section.settings.show_scroll_hint %}
+    <div class="vc-hero__scroll-hint">↓</div>
+  {% endif %}
 </section>
 
 {% schema %}
@@ -60,13 +75,54 @@
     {
       "type": "text",
       "id": "cta_text",
-      "label": "CTA Button Text",
+      "label": "Primary CTA Text",
       "default": "Shop Now"
     },
     {
       "type": "url",
       "id": "cta_link",
-      "label": "CTA Button Link"
+      "label": "Primary CTA Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_text",
+      "label": "Secondary Link Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_line",
+      "label": "Show Trust Line",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_item_1",
+      "label": "Trust Item 1",
+      "default": "Free returns"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_2",
+      "label": "Trust Item 2",
+      "default": "Secure checkout"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_3",
+      "label": "Trust Item 3",
+      "default": "Fast support"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_hint",
+      "label": "Show Scroll Hint",
+      "default": true
     }
   ],
   "presets": [

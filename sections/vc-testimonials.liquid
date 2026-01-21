@@ -1,0 +1,73 @@
+{% comment %}
+  ViralChoice Testimonials Section
+{% endcomment %}
+
+<section class="vc-testimonials">
+  <div class="container">
+    <div class="vc-testimonials__grid reveal">
+      {% for block in section.blocks %}
+        <div class="vc-testimonial-card" {{ block.shopify_attributes }}>
+          <div class="vc-testimonial-card__stars">★★★★★</div>
+          <p class="vc-testimonial-card__text">{{ block.settings.quote }}</p>
+          <div class="vc-testimonial-card__author">{{ block.settings.author | default: 'Customer' }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Testimonials",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Great product, fast shipping, exactly as described."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Customer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Great product, fast shipping, exactly as described.",
+            "author": "Customer"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Really happy with my purchase. Would recommend.",
+            "author": "Customer"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Quality product and excellent customer service.",
+            "author": "Customer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

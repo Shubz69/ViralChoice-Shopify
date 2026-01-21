@@ -1,0 +1,90 @@
+{% comment %}
+  ViralChoice FAQ Accordion
+{% endcomment %}
+
+<section class="vc-faq">
+  <div class="vc-faq__container">
+    {% if section.settings.title != blank %}
+      <h2 class="vc-faq__title reveal">{{ section.settings.title }}</h2>
+    {% else %}
+      <h2 class="vc-faq__title reveal">Frequently Asked Questions</h2>
+    {% endif %}
+    
+    <div class="vc-faq__list">
+      {% for block in section.blocks %}
+        <div class="vc-faq-item reveal" {{ block.shopify_attributes }}>
+          <button class="vc-faq-question" aria-expanded="false">
+            {{ block.settings.question }}
+          </button>
+          <div class="vc-faq-answer">
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How long does shipping take?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "We offer fast shipping options. Standard shipping typically takes 5-7 business days."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "We offer fast shipping options. Standard shipping typically takes 5-7 business days. Express shipping is available at checkout for faster delivery."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "We offer a 30-day money-back guarantee. If you're not satisfied with your purchase, you can return it for a full refund. Items must be in original condition."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Is checkout secure?",
+            "answer": "Yes, all payments are processed securely through Shopify's encrypted checkout system. We never store your payment information."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

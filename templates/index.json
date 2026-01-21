@@ -1,7 +1,7 @@
 {
   "sections": {
-    "viral-hero": {
-      "type": "viral-hero",
+    "vc-hero": {
+      "type": "vc-hero",
       "settings": {
         "headline": "Discover Viral Products That Actually Work",
         "subheadline": "Join thousands of satisfied customers who found their next favorite product",
@@ -11,66 +11,124 @@
         "trust_item_1": "Free returns",
         "trust_item_2": "Secure checkout",
         "trust_item_3": "Fast support",
-        "show_arrow": true
+        "show_scroll_hint": true
       }
     },
-    "trending-carousel": {
-      "type": "trending-carousel",
+    "vc-benefits": {
+      "type": "vc-benefits",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🚀",
+            "title": "Fast Shipping",
+            "text": "Quick delivery to your door"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✅",
+            "title": "Tested Products",
+            "text": "Viral products verified by thousands"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🔒",
+            "title": "Secure Checkout",
+            "text": "Your payment is 100% protected"
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "💬",
+            "title": "Fast Support",
+            "text": "We're here to help when you need us"
+          }
+        }
+      }
+    },
+    "vc-trending-row": {
+      "type": "vc-trending-row",
       "settings": {
         "title": "Trending Now",
-        "collection": ""
+        "collection": "",
+        "max_products": 10
       }
     },
-    "benefits-icons": {
-      "type": "benefits-icons",
+    "vc-collection-grid": {
+      "type": "vc-collection-grid",
       "settings": {
-        "benefit_1_title": "Fast Shipping",
-        "benefit_1_text": "Quick delivery to your door",
-        "benefit_2_title": "Tested Products",
-        "benefit_2_text": "Viral products verified by thousands",
-        "benefit_3_title": "Secure Checkout",
-        "benefit_3_text": "Your payment is 100% protected",
-        "show_benefit_4": true,
-        "benefit_4_title": "Fast Support",
-        "benefit_4_text": "We're here to help when you need us"
-      }
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "settings": {
-        "testimonial_1_text": "Great product, fast shipping, exactly as described.",
-        "testimonial_1_author": "Customer",
-        "testimonial_2_text": "Really happy with my purchase. Would recommend.",
-        "testimonial_2_author": "Customer",
-        "testimonial_3_text": "Quality product and excellent customer service.",
-        "testimonial_3_author": "Customer"
-      }
-    },
-    "faq-accordion": {
-      "type": "faq-accordion",
-      "settings": {
-        "title": "Frequently Asked Questions"
-      }
-    },
-    "featured-collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured Collection",
+        "title": "Best Sellers",
         "collection": "",
         "product_limit": 8
       }
     },
-    "footer": {
-      "type": "footer",
-      "settings": {}
+    "vc-testimonials": {
+      "type": "vc-testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Great product, fast shipping, exactly as described.",
+            "author": "Customer"
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Really happy with my purchase. Would recommend.",
+            "author": "Customer"
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Quality product and excellent customer service.",
+            "author": "Customer"
+          }
+        }
+      }
+    },
+    "vc-faq": {
+      "type": "vc-faq",
+      "settings": {
+        "title": "Frequently Asked Questions"
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "We offer fast shipping options. Standard shipping typically takes 5-7 business days. Express shipping is available at checkout for faster delivery."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "We offer a 30-day money-back guarantee. If you're not satisfied with your purchase, you can return it for a full refund. Items must be in original condition."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Is checkout secure?",
+            "answer": "Yes, all payments are processed securely through Shopify's encrypted checkout system. We never store your payment information."
+          }
+        }
+      }
     }
   },
   "order": [
-    "viral-hero",
-    "benefits-icons",
-    "featured-collection",
-    "trending-carousel",
-    "testimonials",
-    "faq-accordion"
+    "vc-hero",
+    "vc-benefits",
+    "vc-trending-row",
+    "vc-collection-grid",
+    "vc-testimonials",
+    "vc-faq"
   ]
 }

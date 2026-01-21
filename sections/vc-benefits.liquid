@@ -1,0 +1,90 @@
+{% comment %}
+  ViralChoice Benefits Section - 4 Card Grid
+{% endcomment %}
+
+<section class="vc-benefits">
+  <div class="container">
+    <div class="vc-benefits__grid reveal">
+      {% for block in section.blocks limit: 4 %}
+        <div class="vc-benefit-card" {{ block.shopify_attributes }}>
+          <span class="vc-benefit-card__icon">{{ block.settings.icon | default: '✓' }}</span>
+          <h3 class="vc-benefit-card__title">{{ block.settings.title | default: 'Benefit' }}</h3>
+          <p class="vc-benefit-card__text">{{ block.settings.text | default: 'Benefit description' }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Benefits",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or text)",
+          "default": "🚀"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Fast Shipping"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description",
+          "default": "Quick delivery to your door"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🚀",
+            "title": "Fast Shipping",
+            "text": "Quick delivery to your door"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "✅",
+            "title": "Tested Products",
+            "text": "Viral products verified by thousands"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🔒",
+            "title": "Secure Checkout",
+            "text": "Your payment is 100% protected"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "💬",
+            "title": "Fast Support",
+            "text": "We're here to help when you need us"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

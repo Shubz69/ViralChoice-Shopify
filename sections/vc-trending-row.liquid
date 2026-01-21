@@ -1,0 +1,84 @@
+{% comment %}
+  ViralChoice Trending Row - Horizontal Scroll
+{% endcomment %}
+
+{% if section.settings.collection != blank %}
+  {% assign collection = collections[section.settings.collection] %}
+  
+  {% if collection.products.size > 0 %}
+    <section class="vc-trending">
+      <div class="vc-trending__header reveal">
+        {% if section.settings.title != blank %}
+          <h2 class="vc-trending__title">{{ section.settings.title }}</h2>
+        {% else %}
+          <h2 class="vc-trending__title">Trending Now</h2>
+        {% endif %}
+      </div>
+      
+      <div class="vc-trending__scroll">
+        <div class="vc-trending__track">
+          {% for product in collection.products limit: section.settings.max_products %}
+            <div class="vc-trending__item">
+              <a href="{{ product.url }}">
+                {% if product.featured_image %}
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 400 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="vc-trending__image"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="vc-trending__image" style="background: var(--surface);"></div>
+                {% endif %}
+                
+                <h3 class="vc-trending__title">{{ product.title }}</h3>
+                
+                <div class="vc-trending__price">
+                  {{ product.price | money }}
+                  {% if product.compare_at_price > product.price %}
+                    <span class="vc-trending__price-compare">{{ product.compare_at_price | money }}</span>
+                  {% endif %}
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "VC Trending Row",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Trending Now"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max Products",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Trending Row"
+    }
+  ]
+}
+{% endschema %}

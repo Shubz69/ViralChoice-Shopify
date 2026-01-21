@@ -5,22 +5,22 @@
 
 <footer class="vc-footer">
   <div class="vc-footer__inner">
-    <p class="vc-footer__brand">
+    <div class="vc-footer__brand">
       {{ section.settings.footer_text | default: 'ViralChoice' }}
-    </p>
+    </div>
     
-    <nav class="vc-footer__links">
+    <nav class="vc-footer__links" style="display: flex; gap: var(--space-lg); flex-wrap: wrap; justify-content: center; margin: var(--space-md) 0;">
       {% if shop.policies.refund-policy %}
-        <a href="{{ shop.policies.refund-policy.url }}" class="vc-footer__link">Refund Policy</a>
+        <a href="{{ shop.policies.refund-policy.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Refund Policy</a>
       {% endif %}
       {% if shop.policies.privacy-policy %}
-        <a href="{{ shop.policies.privacy-policy.url }}" class="vc-footer__link">Privacy Policy</a>
+        <a href="{{ shop.policies.privacy-policy.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Privacy Policy</a>
       {% endif %}
       {% if shop.policies.terms-of-service %}
-        <a href="{{ shop.policies.terms-of-service.url }}" class="vc-footer__link">Terms of Service</a>
+        <a href="{{ shop.policies.terms-of-service.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Terms of Service</a>
       {% endif %}
       {% if pages.contact %}
-        <a href="{{ pages.contact.url }}" class="vc-footer__link">Contact</a>
+        <a href="{{ pages.contact.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Contact</a>
       {% endif %}
     </nav>
     
