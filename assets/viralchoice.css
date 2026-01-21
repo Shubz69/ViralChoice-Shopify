@@ -550,6 +550,7 @@ section:last-of-type {
   z-index: 2;
   max-width: var(--container-width);
   margin: 0 auto;
+  padding: 0 var(--container-padding);
   text-align: center;
   width: 100%;
 }
@@ -831,6 +832,7 @@ section:last-of-type {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--container-padding);
+  width: 100%;
 }
 
 .vc-benefit-card {
@@ -1571,6 +1573,7 @@ section:last-of-type {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--container-padding);
+  width: 100%;
 }
 
 .vc-testimonial-card {
@@ -1649,6 +1652,7 @@ section:last-of-type {
 
 .vc-faq .container {
   max-width: 900px;
+  width: 100%;
 }
 
 .vc-faq__title {
@@ -2341,6 +2345,7 @@ section:last-of-type {
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .vc-cta__headline {
@@ -2488,6 +2493,7 @@ section:last-of-type {
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
   margin-bottom: var(--space-10);
+  width: 100%;
 }
 
 .vc-trust-badge-card {
@@ -2700,8 +2706,9 @@ section:last-of-type {
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-10);
   position: relative;
+  flex-wrap: wrap;
 }
 
 .vc-avatar {
@@ -2921,6 +2928,7 @@ section:last-of-type {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
   margin-bottom: var(--space-10);
+  width: 100%;
 }
 
 .vc-why-trust-card {
