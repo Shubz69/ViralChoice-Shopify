@@ -201,13 +201,42 @@ p {
   width: 100%;
 }
 
-/* Section Spacing */
+/* Section Spacing - Consistent System */
 section {
-  padding: var(--space-20) 0;
+  padding: var(--space-16) 0;
+  position: relative;
+  margin: 0;
 }
 
 section:first-of-type {
-  padding-top: var(--space-24);
+  padding-top: 0;
+}
+
+/* Smooth transitions between sections */
+section + section {
+  margin-top: 0;
+}
+
+/* Remove bottom padding from last section before footer */
+section:last-of-type {
+  padding-bottom: var(--space-20);
+}
+
+/* Ensure sections with different backgrounds flow smoothly */
+.vc-benefits,
+.vc-collection,
+.vc-faq,
+.vc-why-trust {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.vc-trending,
+.vc-testimonials,
+.vc-social-proof,
+.vc-trust-badges-section {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
@@ -216,11 +245,15 @@ section:first-of-type {
   }
   
   section {
-    padding: var(--space-12) 0;
+    padding: var(--space-10) 0;
   }
   
   section:first-of-type {
-    padding-top: var(--space-16);
+    padding-top: 0;
+  }
+  
+  section:last-of-type {
+    padding-bottom: var(--space-12);
   }
 }
 
@@ -466,10 +499,11 @@ section:first-of-type {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: var(--space-24) var(--container-padding);
+  padding: var(--space-20) var(--container-padding);
   background: linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 50%, var(--bg) 100%);
   background-size: 200% 200%;
   animation: gradientShift 20s ease infinite;
+  margin: 0;
 }
 
 @keyframes gradientShift {
@@ -772,10 +806,11 @@ section:first-of-type {
    ============================================ */
 
 .vc-benefits {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg-elevated);
   position: relative;
   overflow: hidden;
+  margin: 0;
 }
 
 .vc-benefits::before {
@@ -878,15 +913,16 @@ section:first-of-type {
    ============================================ */
 
 .vc-trending {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg);
   position: relative;
+  margin: 0;
 }
 
 .vc-trending__header {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 var(--container-padding) var(--space-10);
+  padding: 0 var(--container-padding) var(--space-8);
   text-align: center;
 }
 
@@ -1310,15 +1346,16 @@ section:first-of-type {
    ============================================ */
 
 .vc-collection {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg-elevated);
   position: relative;
+  margin: 0;
 }
 
 .vc-collection__header {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 var(--container-padding) var(--space-10);
+  padding: 0 var(--container-padding) var(--space-8);
   text-align: center;
 }
 
@@ -1521,9 +1558,10 @@ section:first-of-type {
    ============================================ */
 
 .vc-testimonials {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg);
   position: relative;
+  margin: 0;
 }
 
 .vc-testimonials__grid {
@@ -1603,9 +1641,10 @@ section:first-of-type {
    ============================================ */
 
 .vc-faq {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg-elevated);
   position: relative;
+  margin: 0;
 }
 
 .vc-faq .container {
@@ -1616,7 +1655,7 @@ section:first-of-type {
   text-align: center;
   font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 800;
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-8);
   letter-spacing: -0.03em;
   color: var(--text);
 }
@@ -2276,10 +2315,11 @@ section:first-of-type {
    ============================================ */
 
 .vc-cta {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--surface) 100%);
   position: relative;
   overflow: hidden;
+  margin: 0;
 }
 
 .vc-cta::before {
@@ -2405,10 +2445,11 @@ section:first-of-type {
    ============================================ */
 
 .vc-trust-badges-section {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-elevated) 100%);
   position: relative;
   overflow: hidden;
+  margin: 0;
 }
 
 .vc-trust-badges-section::before {
@@ -2424,7 +2465,7 @@ section:first-of-type {
 
 .vc-trust-badges__header {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
 }
 
 .vc-trust-badges__title {
@@ -2446,7 +2487,7 @@ section:first-of-type {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
 }
 
 .vc-trust-badge-card {
@@ -2612,10 +2653,11 @@ section:first-of-type {
    ============================================ */
 
 .vc-social-proof {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg);
   position: relative;
   overflow: hidden;
+  margin: 0;
 }
 
 .vc-social-proof::before {
@@ -2633,7 +2675,7 @@ section:first-of-type {
 
 .vc-social-proof__header {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
 }
 
 .vc-social-proof__title {
@@ -2650,7 +2692,7 @@ section:first-of-type {
 }
 
 .vc-social-proof__content {
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
 }
 
 .vc-social-proof__avatars {
@@ -2847,14 +2889,15 @@ section:first-of-type {
    ============================================ */
 
 .vc-why-trust {
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   background: var(--bg-elevated);
   position: relative;
+  margin: 0;
 }
 
 .vc-why-trust__header {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
 }
 
 .vc-why-trust__title {
@@ -2877,7 +2920,7 @@ section:first-of-type {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
 }
 
 .vc-why-trust-card {
@@ -2941,7 +2984,7 @@ section:first-of-type {
 
 .vc-why-trust__guarantee {
   max-width: 900px;
-  margin: 0 auto;
+  margin: var(--space-10) auto 0;
 }
 
 .vc-guarantee-box {
@@ -3027,10 +3070,10 @@ section:first-of-type {
    ============================================ */
 
 .vc-footer {
-  padding: var(--space-20) 0;
+  padding: var(--space-16) 0;
   background: var(--bg-elevated);
   border-top: 1px solid var(--border);
-  margin-top: var(--space-24);
+  margin-top: 0;
   position: relative;
 }
 
