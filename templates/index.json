@@ -121,6 +121,15 @@
           }
         }
       }
+    },
+    "vc-cta": {
+      "type": "vc-cta",
+      "settings": {
+        "headline": "Ready to Find Your Next Favorite Product?",
+        "text": "Join thousands of satisfied customers discovering viral products that actually work.",
+        "cta_text": "Shop Now",
+        "cta_link": "/collections/all"
+      }
     }
   },
   "order": [
@@ -129,6 +138,7 @@
     "vc-trending-row",
     "vc-collection-grid",
     "vc-testimonials",
-    "vc-faq"
+    "vc-faq",
+    "vc-cta"
   ]
 }

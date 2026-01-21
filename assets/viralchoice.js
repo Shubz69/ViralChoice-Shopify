@@ -248,6 +248,19 @@
   }
 
   // ============================================
+  // SAFE JSON PARSING HELPER
+  // ============================================
+
+  async function safeJsonResponse(response) {
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(text || 'Invalid response format');
+    }
+    return response.json();
+  }
+
+  // ============================================
   // QUICK ADD TO CART
   // ============================================
 
@@ -274,7 +287,11 @@
         button.classList.add('loading');
 
         try {
-          const response = await fetch(window.routes.cart_add_url, {
+          const cartAddUrl = window.routes.cart_add_url.endsWith('.js') 
+            ? window.routes.cart_add_url 
+            : window.routes.cart_add_url + '.js';
+
+          const response = await fetch(cartAddUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -288,9 +305,9 @@
             })
           });
 
-          const data = await response.json();
+          const data = await safeJsonResponse(response);
 
-          if (response.ok) {
+          if (response.ok && !data.errors) {
             button.textContent = 'Added!';
             button.classList.remove('loading');
             showToast('Added to cart', 'success');
@@ -304,7 +321,8 @@
               button.disabled = false;
             }, 2000);
           } else {
-            throw new Error(data.message || 'Failed to add to cart');
+            const errorMsg = data.description || data.message || 'Failed to add to cart';
+            throw new Error(errorMsg);
           }
         } catch (error) {
           console.error('Error adding to cart:', error);
@@ -514,8 +532,12 @@
   // ============================================
 
   function updateCartCount() {
-    fetch(window.routes.cart_url + '.js')
-      .then(response => response.json())
+    const cartUrl = window.routes.cart_url.endsWith('.js') 
+      ? window.routes.cart_url 
+      : window.routes.cart_url + '.js';
+
+    fetch(cartUrl)
+      .then(response => safeJsonResponse(response))
       .then(data => {
         const cartCountElements = document.querySelectorAll('.vc-cart-count');
         const count = data.item_count || 0;
@@ -531,6 +553,7 @@
       })
       .catch(error => {
         console.error('Error updating cart count:', error);
+        // Silently fail - don't show toast for cart count updates
       });
   }
 
@@ -570,29 +593,54 @@
         submitButton.classList.add('loading');
         submitButton.textContent = 'Adding...';
 
+        // Convert FormData to JSON for .js endpoint
         const formData = new FormData(form);
-        
+        const variantId = formData.get('id');
+        const quantity = parseInt(formData.get('quantity') || '1', 10);
+
+        if (!variantId) {
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
+          submitButton.classList.remove('loading');
+          showToast('Please select a variant', 'error');
+          return;
+        }
+
         try {
-          const response = await fetch(window.routes.cart_add_url, {
+          const cartAddUrl = window.routes.cart_add_url.endsWith('.js') 
+            ? window.routes.cart_add_url 
+            : window.routes.cart_add_url + '.js';
+
+          const response = await fetch(cartAddUrl, {
             method: 'POST',
-            body: formData
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              items: [{
+                id: variantId,
+                quantity: quantity
+              }]
+            })
           });
 
-          const data = await response.json();
+          const data = await safeJsonResponse(response);
 
-          if (response.ok) {
+          if (response.ok && !data.errors) {
             submitButton.textContent = 'Added!';
             showToast('Added to cart', 'success');
             updateCartCount();
             
-            // Redirect to cart or reset button
+            // Reset button after delay
             setTimeout(() => {
               submitButton.textContent = originalText;
               submitButton.disabled = false;
               submitButton.classList.remove('loading');
             }, 2000);
           } else {
-            throw new Error(data.message || 'Failed to add to cart');
+            const errorMsg = data.description || data.message || 'Failed to add to cart';
+            throw new Error(errorMsg);
           }
         } catch (error) {
           console.error('Error adding to cart:', error);

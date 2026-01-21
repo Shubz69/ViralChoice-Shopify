@@ -1,0 +1,89 @@
+{% comment %}
+  ViralChoice Final CTA Section
+  Premium call-to-action before footer
+{% endcomment %}
+
+<section class="vc-cta">
+  <div class="container">
+    <div class="vc-cta__inner reveal">
+      {% if section.settings.headline != blank %}
+        <h2 class="vc-cta__headline">{{ section.settings.headline }}</h2>
+      {% else %}
+        <h2 class="vc-cta__headline">Ready to Find Your Next Favorite Product?</h2>
+      {% endif %}
+      
+      {% if section.settings.text != blank %}
+        <p class="vc-cta__text">{{ section.settings.text }}</p>
+      {% else %}
+        <p class="vc-cta__text">Join thousands of satisfied customers discovering viral products that actually work.</p>
+      {% endif %}
+      
+      <div class="vc-cta__buttons">
+        {% if section.settings.cta_link != blank %}
+          <a href="{{ section.settings.cta_link }}" class="vc-cta__button vc-cta__button--primary">
+            {{ section.settings.cta_text | default: 'Shop Now' }}
+          </a>
+        {% else %}
+          <a href="{{ routes.all_products_collection_url }}" class="vc-cta__button vc-cta__button--primary">
+            Shop Now
+          </a>
+        {% endif %}
+        
+        {% if section.settings.secondary_link != blank %}
+          <a href="{{ section.settings.secondary_link }}" class="vc-cta__button vc-cta__button--secondary">
+            {{ section.settings.secondary_text | default: 'Learn More' }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Final CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Ready to Find Your Next Favorite Product?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Join thousands of satisfied customers discovering viral products that actually work."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Primary Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_text",
+      "label": "Secondary Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Final CTA"
+    }
+  ]
+}
+{% endschema %}

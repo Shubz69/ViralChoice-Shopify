@@ -1,26 +1,11 @@
 {
   "sections": {
-    "vc-header": {
-      "type": "header",
-      "settings": {}
-    },
     "main-product": {
       "type": "main-product",
-      "settings": {}
-    },
-    "vc-trust-strip": {
-      "type": "vc-trust-strip",
-      "settings": {}
-    },
-    "footer": {
-      "type": "footer",
       "settings": {}
     }
   },
   "order": [
-    "vc-header",
-    "main-product",
-    "vc-trust-strip",
-    "footer"
+    "main-product"
   ]
 }

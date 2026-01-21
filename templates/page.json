@@ -1,21 +1,11 @@
 {
   "sections": {
-    "vc-header": {
-      "type": "header",
-      "settings": {}
-    },
     "main": {
       "type": "page",
-      "settings": {}
-    },
-    "footer": {
-      "type": "footer",
       "settings": {}
     }
   },
   "order": [
-    "vc-header",
-    "main",
-    "footer"
+    "main"
   ]
 }
