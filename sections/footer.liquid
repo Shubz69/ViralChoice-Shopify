@@ -1,26 +1,26 @@
 {% comment %}
-  ViralChoice Footer Section
-  Minimal footer with policies and contact
+  ViralChoice Premium Footer
+  Clean, minimal, centered
 {% endcomment %}
 
 <footer class="vc-footer">
   <div class="vc-footer__inner">
     <div class="vc-footer__brand">
-      {{ section.settings.footer_text | default: 'ViralChoice' }}
+      {{ section.settings.footer_text | default: shop.name }}
     </div>
     
-    <nav class="vc-footer__links" style="display: flex; gap: var(--space-lg); flex-wrap: wrap; justify-content: center; margin: var(--space-md) 0;">
+    <nav class="vc-footer__links">
       {% if shop.policies.refund-policy %}
-        <a href="{{ shop.policies.refund-policy.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Refund Policy</a>
+        <a href="{{ shop.policies.refund-policy.url }}" class="vc-footer__link">Refund Policy</a>
       {% endif %}
       {% if shop.policies.privacy-policy %}
-        <a href="{{ shop.policies.privacy-policy.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Privacy Policy</a>
+        <a href="{{ shop.policies.privacy-policy.url }}" class="vc-footer__link">Privacy Policy</a>
       {% endif %}
       {% if shop.policies.terms-of-service %}
-        <a href="{{ shop.policies.terms-of-service.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Terms of Service</a>
+        <a href="{{ shop.policies.terms-of-service.url }}" class="vc-footer__link">Terms of Service</a>
       {% endif %}
       {% if pages.contact %}
-        <a href="{{ pages.contact.url }}" style="color: var(--muted); font-size: var(--text-sm); transition: var(--transition-fast);">Contact</a>
+        <a href="{{ pages.contact.url }}" class="vc-footer__link">Contact</a>
       {% endif %}
     </nav>
     
@@ -33,19 +33,12 @@
 {% schema %}
 {
   "name": "VC Footer",
-  "tag": "section",
-  "class": "section",
   "settings": [
     {
       "type": "text",
       "id": "footer_text",
-      "label": "Footer Text",
+      "label": "Footer Brand Text",
       "default": "ViralChoice"
-    }
-  ],
-  "presets": [
-    {
-      "name": "VC Footer"
     }
   ]
 }

@@ -7,18 +7,20 @@
   
   {% if collection.products.size > 0 %}
     <section class="vc-trending">
-      <div class="vc-trending__header reveal">
-        {% if section.settings.title != blank %}
-          <h2 class="vc-trending__title">{{ section.settings.title }}</h2>
-        {% else %}
-          <h2 class="vc-trending__title">Trending Now</h2>
-        {% endif %}
+      <div class="container">
+        <div class="vc-trending__header reveal">
+          {% if section.settings.title != blank %}
+            <h2 class="vc-trending__title">{{ section.settings.title }}</h2>
+          {% else %}
+            <h2 class="vc-trending__title">Trending Now</h2>
+          {% endif %}
+        </div>
       </div>
       
       <div class="vc-trending__scroll">
         <div class="vc-trending__track">
           {% for product in collection.products limit: section.settings.max_products %}
-            <div class="vc-trending__item">
+            <div class="vc-trending__item reveal">
               <a href="{{ product.url }}">
                 {% if product.featured_image %}
                   <img 
@@ -31,7 +33,7 @@
                   <div class="vc-trending__image" style="background: var(--surface);"></div>
                 {% endif %}
                 
-                <h3 class="vc-trending__title">{{ product.title }}</h3>
+                <h3 class="vc-trending__item-title">{{ product.title }}</h3>
                 
                 <div class="vc-trending__price">
                   {{ product.price | money }}

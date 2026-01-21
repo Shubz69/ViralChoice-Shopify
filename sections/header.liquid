@@ -1,6 +1,6 @@
 {% comment %}
-  ViralChoice Header Section
-  Modern sticky header with blur and mobile menu
+  ViralChoice Premium Header
+  Sticky with blur, shrink on scroll, mobile menu
 {% endcomment %}
 
 <header class="vc-header">
@@ -9,8 +9,6 @@
       {{ section.settings.logo_text | default: 'ViralChoice' }}
     </a>
     
-    <button class="vc-mobile-menu-toggle" aria-label="Toggle menu">☰</button>
-    
     <nav class="vc-nav">
       {% for link in linklists[section.settings.menu].links %}
         <a href="{{ link.url }}" class="vc-nav__link">
@@ -18,13 +16,17 @@
         </a>
       {% endfor %}
       
-      <a href="{{ routes.cart_url }}" class="vc-cart-icon">
+      <a href="{{ routes.cart_url }}" class="vc-cart-icon" aria-label="Cart">
         Cart
         {% if cart.item_count > 0 %}
           <span class="vc-cart-count">{{ cart.item_count }}</span>
         {% endif %}
       </a>
     </nav>
+
+    <button class="vc-mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span style="font-size: 1.5rem;">☰</span>
+    </button>
   </div>
 </header>
 

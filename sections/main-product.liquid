@@ -28,7 +28,7 @@
       {% if product.images.size > 1 %}
         <div class="vc-product-page__thumbnails">
           {% for image in product.images %}
-            <div class="vc-product-page__thumbnail">
+            <div class="vc-product-page__thumbnail" data-image-src="{{ image | image_url: width: 1200 }}">
               <img 
                 src="{{ image | image_url: width: 200 }}"
                 alt="{{ image.alt | escape }}"
@@ -85,14 +85,18 @@
             <label for="Quantity-{{ section.id }}" class="vc-product-page__label">
               {{ 'products.product.quantity' | t }}
             </label>
-            <input 
-              type="number" 
-              id="Quantity-{{ section.id }}"
-              name="quantity" 
-              value="1" 
-              min="1"
-              class="vc-product-page__input"
-            >
+            <div class="vc-quantity-stepper">
+              <button type="button" class="vc-quantity-btn">−</button>
+              <input 
+                type="number" 
+                id="Quantity-{{ section.id }}"
+                name="quantity" 
+                value="1" 
+                min="1"
+                class="vc-quantity-input"
+              >
+              <button type="button" class="vc-quantity-btn">+</button>
+            </div>
           </div>
           
           <button
@@ -112,12 +116,22 @@
       </product-form>
       
       {% comment %} Trust Badges Under ATC {% endcomment %}
-      {% render 'vc-trust-badges' %}
+      <div class="vc-product-page__trust-badges">
+        <div class="vc-product-page__trust-badge">
+          Fast Shipping
+        </div>
+        <div class="vc-product-page__trust-badge">
+          Secure Checkout
+        </div>
+        <div class="vc-product-page__trust-badge">
+          30-Day Guarantee
+        </div>
+      </div>
       
       {% comment %} Collapsible Sections {% endcomment %}
       {% if product.description != blank %}
-        <div class="vc-product-page__collapsible">
-          <button class="vc-product-page__collapsible-header">
+        <div class="vc-product-page__collapsible active">
+          <button class="vc-product-page__collapsible-header" aria-expanded="true">
             Product Details
           </button>
           <div class="vc-product-page__collapsible-content">
@@ -127,7 +141,7 @@
       {% endif %}
       
       <div class="vc-product-page__collapsible">
-        <button class="vc-product-page__collapsible-header">
+        <button class="vc-product-page__collapsible-header" aria-expanded="false">
           Shipping Information
         </button>
         <div class="vc-product-page__collapsible-content">
@@ -136,7 +150,7 @@
       </div>
       
       <div class="vc-product-page__collapsible">
-        <button class="vc-product-page__collapsible-header">
+        <button class="vc-product-page__collapsible-header" aria-expanded="false">
           Returns & Refunds
         </button>
         <div class="vc-product-page__collapsible-content">
